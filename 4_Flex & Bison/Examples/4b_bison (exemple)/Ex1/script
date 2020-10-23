@@ -1,0 +1,4 @@
+yacc -d ex.y
+lex ex.l
+gcc lex.yy.c y.tab.c -o ex -lfl
+./ex < in.txt
