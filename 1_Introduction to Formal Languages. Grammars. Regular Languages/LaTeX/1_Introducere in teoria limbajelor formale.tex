@@ -1477,32 +1477,10 @@ Prezentați felul în care o gramatică $G$ definește semantica unui limbaj.
 
 \begin{frame}{Intrebari recapitulative}
 \begin{itemize}
-\item
-Fie $\Sigma$ alfabetul unui limbaj $L$, astfel încât $a, b, x$ $\in \Sigma$. Cunoscând că limbajul $L$ are proprietățile:
-
-\begin{itemize}
-\item
-$ax \in L$ $\Leftrightarrow$ $bx \in L$,
-
-\item
-numărul de propoziții de forma $ax$ din $L$ este $k$.
-\end{itemize}
-
-Să se scrie care este rezultatul operației: 
-
-card(L) – card(d/da L) – card(d/db L).
-\newline
 
 \item
 Care este relația dintre alfabetul unei gramatici și alfabetul limbajului definit de către gramatica respectivă?
-
-\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}{Intrebari recapitulative}
-\begin{itemize}
+\newline
 
 \item
 Explicați care este diferența dintre relația de derivare directă și relația de derivare în k pași.
@@ -2721,9 +2699,9 @@ construcţia automatului finit se face recursiv, pe baza definiţiei expresiei r
 pentru fiecare dintre expresiile regulare de bază, va fi prezentat automatul finit echivalent, cu o singură stare finală, folosind conventiile:
 \begin{itemize}
 \item
-o eclipsă reprezintă un automat, care recunoaşte expresia regulară R, sau aceeaşi maşină, dar cu toate stările componente transformate în stări nefinale
+o elipsă reprezintă un automat, care recunoaşte expresia regulară R, sau aceeaşi maşină, dar cu toate stările componente transformate în stări nefinale
 \item
-o eclipsă este o colecţie de stări şi tranziţii
+o elipsă este o colecţie de stări şi tranziţii
 \item
 cele două stări marcate reprezintă starea iniţială şi respectiv starea finală, sau starea iniţială şi starea finală, transformată într-o stare nefinală
 \end{itemize}
@@ -2803,6 +2781,42 @@ R*&\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 
 
 \begin{frame}{De la expresii regulare la automate finite}
+\begin{figure}
+\begin{tabular}{c|c}
+R+&\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+
+  \node[state,initial]			(0)              			{$$};
+  \draw (1,0) ellipse(2cm and 1cm) node at (1,0){$R$};
+  \node[state]    			(1)   [right  of=0] 	{$$};
+  \node[state,accepting]    			(2)   [right  of=1] 	{$$};
+
+\path[->]
+     (1)	edge 	[bend left]		node	{$\epsilon$} (2)
+     (1)	edge 	[bend left]    	node 	{$\epsilon$} (0)
+  ;
+\end{tikzpicture}\\[6pt] \hline \\
+
+$R?$&\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+  \node[state,initial]			(0)              			{$$};
+	\draw (2.5,1.5) ellipse(2cm and 1cm) node at (2.5,2){$R$};
+  \node[state]    			(1)   [above right  of=0] 	{$$};
+  \node[state]    			(3)   [right  of=1] 	{$$};
+  \node[state,accepting]              (5)   [below right of=3] 		{$$};   
+
+ \path[->]
+     (0)	edge 			node	{$\epsilon$} (5)
+           	edge			node	{$\epsilon$} (1)
+     (3)	edge			node	{$\epsilon$} (5)
+  ;
+\end{tikzpicture}
+  
+\end{tabular}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{De la expresii regulare la automate finite}
 \textbf{Aplicaţie facultativă}
 \begin{itemize}
 \item
@@ -2826,7 +2840,7 @@ Codul care implementează funcţionarea AFD echivalent pentru AF-$\epsilon$ de m
 \begin{itemize}
 
 \item
-Explicaţi ambiguităţile care pot să apară în utilizarea expresiilor regulate pentru a recunoaşte atomii lexicali dintr-un text dat.
+Explicaţi ambiguităţile care pot să apară în utilizarea expresiilor regulare pentru a recunoaşte atomii lexicali dintr-un text dat.
 \newline
 
 \item
@@ -3337,6 +3351,29 @@ Explicați legătura dintre caracterul finit al mulțimii stărilor automatelor 
 
 \item
 Explicați rolul principiului cuiburilor de porumbei în înțelegerea limbajelor regulare.
+\newline
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Intrebari recapitulative}
+\begin{itemize}
+\item
+Fie $\Sigma$ alfabetul unui limbaj $L$, astfel încât $a, b, x$ $\in \Sigma$. Cunoscând că limbajul $L$ are proprietățile:
+
+\begin{itemize}
+\item
+$ax \in L$ $\Leftrightarrow$ $bx \in L$,
+
+\item
+numărul de propoziții de forma $ax$ din $L$ este $k$.
+\end{itemize}
+
+Să se scrie care este rezultatul operației: 
+
+card(L) – card(d/da L) – card(d/db L).
 \newline
 
 \end{itemize}
