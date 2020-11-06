@@ -3345,6 +3345,32 @@ $a(bc)^q ad$
 
 
 
+\begin{frame}{Lema pompării pentru limbajele regulare - Exercițiu}
+Să se demonstreze că următoarele limbaje nu sunt limbaje regulare:
+
+\begin{itemize}
+\item
+L=\{$a b^n c^n$| n$\geq$ 1\}
+\newline
+%se alege w = ab^N-1c^N-1
+
+\item
+L=\{$a^n b^l c^{n+l}$| n, l$\geq$ 0\}
+\newline
+
+\item
+L = \{ $a^i b^j$ | i > j \}
+\newline
+
+\item
+L = \{ $a^{n!} | n \geq 0$ \}
+\newline
+
+\end{itemize}
+\end{frame}
+
+
+
 \begin{frame}{Teorema Myhill-Nerode à la Brzozowski}
 \begin{itemize}
 \item
@@ -3530,7 +3556,7 @@ Explicați rolul principiului cuiburilor de porumbei în înțelegerea limbajelo
 \begin{frame}{Intrebari recapitulative}
 \begin{itemize}
 \item
-Fie $\Sigma$ alfabetul unui limbaj $L$, astfel încât $a, b, x$ $\in \Sigma$. Cunoscând că limbajul $L$ are proprietățile:
+Fie $\Sigma$ alfabetul unui limbaj $L$, astfel încât $a, b$ $\in \Sigma$ și $x$ $\in \Sigma^{*}$. Cunoscând că limbajul $L$ are proprietățile:
 
 \begin{itemize}
 \item
@@ -3590,19 +3616,33 @@ Wikipedia, Programming paradigm
 Irina Athanasiu, Limbaje formale și translatoare, 2002
 \url{http://www.scribd.com/doc/22056333/Limbajeformale-\%C5\%9Fi-automate}
 \item
-Online regular expression designers
-\begin{itemize}
+Lila Ghemri, The Pigeonhole principle with proof, 2007
+\url{http://cs.tsu.edu/ghemri/CS248/ClassNotes/Non_Reg_Lang.pdf}
 \item
-\url{https://www.debuggex.com/}
-\item
-\url{http://www.regexr.com}
-\end{itemize}
-\item
-Regular Expressions to Non-Deterministic Finite Automata
-\url{http://hackingoff.com/compilers/regular-expression-to-nfa-dfa}
+Ben Wiedermann, How to Use The Pumping Theorem, 2004
+\url{https://www.cs.hmc.edu/~benw/teaching/cs341_fa04/pumping.pdf}
 \item
 Bosker Blog, I hate the Pumping Lemma
 \url{https://bosker.wordpress.com/2013/08/18/i-hate-the-pumping-lemma/}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Bibliografie}
+\begin{itemize}
+\item
+Costas Busch, More Applications of the Pumping Lemma, 2006
+\url{https://slideplayer.com/slide/5322383/}
+
+\item
+N. Murugesan, O. V. Sundaram, "Some Properties of Brzozowski Derivatives of Regular Expressions", arXiv preprint arXiv:1407.5902, 2014
+\url{https://arxiv.org/abs/1407.5902}
+
+\item
+Matthew Might, David Darais, Daniel Spiewak, "Parsing with Derivatives: a Functional Pearl", ICFP’11, September 19–21, 2011, Tokyo, Japan
+\url{https://dl.acm.org/doi/abs/10.1145/2034574.2034801}
+
 \end{itemize}
 \end{frame}
 
