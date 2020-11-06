@@ -1,6 +1,38 @@
 \documentclass[pdf]{beamer}
 \mode<presentation>{} 
 
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{shapes}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{pgf}
+\usepackage{tikz-qtree,tikz-qtree-compat}
+\usepackage{mathtools,enumerate,amssymb}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{bbding}
+\usepackage{adjustbox}
+\usepackage[euler]{textgreek}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{varwidth}
+\usepackage{framed}
+\usepackage[shrink=100]{microtype}
+\usepackage[absolute,overlay]{textpos}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{multicol}
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{pgf}
@@ -78,12 +110,17 @@ Analiza sintactică prin coborâre recursivă
 Analiza sintactică deplasare - reducere (shift - reduce)
 \item
 Analiza sintactică ascendentă cu reveniri
+
 \item
-Analiza sintactică bazată pe precedenţa operator
+Analiza sintactică bazată pe relații de precedență
+\begin{itemize}
 \item
-(\textit{Analiza sintactică bazată pe precedenţa simplă})
+Analiza sintactică bazată pe precedenţa operator (Robert Floyd)
 \item
-(\textit{Analiza sintactică bazată pe precedenţa slabă})
+Analiza sintactică bazată pe precedenţa simplă (Wirth-Weber)
+\item
+Analiza sintactică bazată pe precedenţa slabă (Ichbiach-Morse)
+\end{itemize}
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -3590,6 +3627,131 @@ S $\Rightarrow^{(5)}$ Bab  $\Rightarrow^{(1)}$ aab
 
 
 
+\begin{frame}{Analiza sintactică bazată pe relații de precedență}
+
+\begin{itemize}
+	\item 
+	mulțimea limbajelor de precedență \( \subset \) mulțimea limbajelor independente de context
+
+	\item 
+	relații de precedență 
+	\fcolorbox{red}{white}{\begin{varwidth}{1\textwidth} < \end{varwidth}} \fcolorbox{red}{white}{\begin{varwidth}{1\textwidth} = \end{varwidth}} \fcolorbox{red}{white}{\begin{varwidth}{1\textwidth} > \end{varwidth}}
+	
+	\begin{itemize}
+		\item
+		operator
+		
+		\item
+		simplă
+		
+		\item
+		slabă	
+	\end{itemize}
+		
+	\item 
+	pentru a determina un capăt se analizează relațiile de precedență dintre ST(IST) și SI(ISI)
+	
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}{Analiza sintactică bazată pe relații de precedență}
+
+\begin{center}
+\fcolorbox{blue}{white}{
+\begin{varwidth}{1\textwidth}
+\begin{equation*}
+\hspace{1mm} S \Rightarrow^* \hspace{1mm} \omega  \hspace{1mm} \alpha \hspace{1mm} \underline{A} \hspace{1mm} \delta \hspace{1mm} \nu  \hspace{1mm} \Rightarrow \hspace{1mm} \omega \hspace{1mm} \alpha \hspace{1mm} \underline{ \beta \hspace{1mm} \upsilon \hspace{1mm} \gamma } \hspace{1mm} \delta \hspace{1mm} \nu \hspace{1mm} , \exists \hspace{1mm} A \rightarrow \beta \upsilon \gamma \in P
+\end{equation*}
+\end{varwidth}
+}
+\end{center}
+
+\begin{align*}
+\alpha & \in (V_{N} \cup \Sigma)   &  \beta & \in (V_{N} \cup \Sigma) & \upsilon & \in (V_{N} \cup \Sigma)^*\\
+\gamma & \in(V_{N} \cup \Sigma) & \delta & \in \Sigma & \nu & \in \Sigma^*\\
+\end{align*}
+\end{frame}
+
+
+
+\begin{frame}{Analiza sintactică bazată pe relații de precedență}
+
+\begin{align*}
+\alpha & < \beta & \gamma &> \delta
+\end{align*}
+
+\resizebox{10cm}{5cm}{
+\begin{tikzpicture}
+
+%stanga
+
+\draw[fill=ballblue] (-10,12) -- (-10,10) -- (-8,10) -- (-8,12) -- (-10,12); %>
+\draw(-9,11) node[]{\large >};
+\draw (-7,11) -- (-5,11);	%sageata yeta
+\draw (-4,11) -- (-4,8) -- (-2,8) -- (-2,11) -- (-4,11);%tau
+\draw (-3,9.5) node[]{$\gamma$};
+\draw (-4,8) -- (-4,4) -- (-2,4) -- (-2,8) -- (-4,8);%u%
+\draw (-3,6) node[]{u};
+\draw [fill=ballblue] (-10,3) -- (-10,1) -- (-8,1) -- (-8,3) -- (-10,3);%<
+\draw (-9,2) node[]{<};
+\draw (-4,4) -- (-4,2) -- (-2,2) -- (-2,4) -- (-4,4); %beta
+\draw (-3,3) node[]{$\beta$};
+\draw (-4,2) -- (-4,1) -- (-2,1) -- (-2,2) -- (-4,2); %alpha%
+\draw (-3,1.5) node[]{$\alpha$};
+\draw (-4,-4) -- (-2,-4) -- (-2,1) -- (-4,1) -- (-4,-4); %dreptunghi jos
+\draw (-3,-2) node[]{$\omega$};
+\draw (-3,-5) node[]{ST};
+\draw (-7,2) -- (-5,2); 	%sageata alpha
+\draw [fill=yellow] (6,3) ellipse (130 pt and 80 pt);
+
+%dreapta
+
+\draw (0,11) -- (0,9) -- (7,9) -- (7,11) -- (0,11); %stanga tau
+\draw (-0.5,10) node[]{SI};
+\draw (5,9) -- (7,9) -- (7,11) -- (5,11) -- (5,9); %tau
+\draw (6,10) node[]{$\delta$};
+\draw (7,11) -- (7,9) -- (15,9) -- (15,11) -- (7,11); % dreapta tau
+\draw (8,8) node[]{ISI};
+\draw (6,6) -- (6,8); %arrow sus
+\draw (5,4) -- (5,2) -- (7,2) -- (7,4) -- (5,4); %centru cerc
+\draw (6,3) node[]{AF};
+\end{tikzpicture}
+}
+\end{frame}
+
+
+
+\begin{frame}{Analiza sintactică bazată pe precedenţa operator (Robert Floyd)} 
+      \begin{textblock*}{14cm}(4.7cm,2.5cm)
+		{\LARGE{Robert Floyd}}
+      \end{textblock*}
+       
+      \begin{textblock*}{14cm}(1cm,3.7cm)
+      {\small{Carnegie Mellon University, Stanford University}}
+      \end{textblock*}
+      
+      \begin{textblock*}{14cm}(5.3cm,4.5cm)
+       \textbf{{Lucrari in:}}\\ 
+      \end{textblock*}
+        
+      \begin{textblock*}{11cm}(1cm,5cm)
+        theory of parsing, semantics of programming languages, automatic program verification, automatic program synthesis, and analysis of algorithms
+	  \end{textblock*}
+
+\begin{textblock*}{11cm}(2cm,6cm)
+\includegraphics[width=23mm,scale=0.1]{img/Picture1}
+\end{textblock*}
+\begin{textblock*}{11cm}(8cm,6cm)
+\includegraphics[width=30mm,scale=0.6]{img/Picture2}
+\end{textblock*}
+\end{frame}
+
+
+
 \begin{frame}{Analiza sintactică bazată pe precedenţa operator}
 O gramatică
 \begin{itemize}
@@ -3832,6 +3994,147 @@ e.g. dacă, în cazul relaţiei de precedenţă operator mai mic, se află un ne
 \item
 analog şi în cazul relaţiei de precedenţă operator mai mare
 \end{itemize}
+\end{frame}
+
+
+
+%%% slide 19 in original presentation - correct
+\begin{frame}{Analiza sintactică bazată pe precedenţa operator}
+ 
+\begin{textblock*}{11cm}(2.4cm,2.3cm)
+ relatii de ordine
+\end{textblock*}
+ 
+\begin{textblock*}{11cm}(5cm,2.2cm)
+ \begin{tabular}{| c | c | c |}
+  \hline
+  $<_{0}$ & $=_{0}$ & $>_{0}$\\
+  \hline
+ \end{tabular}
+\end{textblock*}
+
+ \begin{textblock*}{11cm}(3.1cm,3cm)
+    \fbox{S $\Rightarrow$ w$\alpha$\underline{A} $\delta$v $\Rightarrow$ w$\alpha\beta$u$\gamma\delta$v , $\exists$ A$\rightarrow \beta u\gamma$}
+\end{textblock*}
+    
+\begin{textblock*}{11cm}(-1.5cm,3.5cm)
+    \begin{center}
+    \fbox{
+        \begin{varwidth}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+        $\beta = $  (a) v (aB) \hspace{1cm} a,b $\in \Sigma$\\
+        $\gamma = $ (b) v (bC)\\
+        $\delta \in \Sigma$ \hspace{2.2cm} B,C  $\in$ $V_{N}$
+        \end{varwidth}
+    }
+\end{center}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.05cm,3.5cm)
+ \begin{center}
+ \fbox{
+  \begin{varwidth}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+    u $\in$ ($V_{N}$ $\cup \Sigma$)\\
+    v $\in \Sigma$*\\
+    $\alpha \in \Sigma$
+  \end{varwidth}
+  }
+\end{center}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(6.8cm,7cm)
+\begin{tikzpicture}
+\draw [yellow!60,fill=yellow!60](2,2) ellipse (2cm and 1cm);
+\end{tikzpicture}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(8.6cm,6.7cm)
+$\Uparrow$
+\end{textblock*}
+
+\begin{textblock*}{11cm}(6.8cm,6.2cm)
+\begin{tikzpicture}
+\draw (2,1) -- (2,1.5) -- (6,1.5) -- (6,1) -- (2,1);
+\end{tikzpicture}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(6.4cm,6.3cm)
+SI
+\end{textblock*}
+
+\begin{textblock*}{11cm}(9.3cm,6.8cm)
+ISI
+\end{textblock*}
+
+\begin{textblock*}{11cm}(9.0cm,6.2cm)
+\line(0,1){14}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(8.4cm,6.2cm)
+\line(0,1){14}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(8.65cm,6.32cm)
+$\delta$
+\end{textblock*}
+
+\begin{textblock*}{11cm}(4cm,6.2cm)
+\line(0,1){80}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,6.2cm)
+\line(0,1){80}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,6.2cm)
+\line(1,0){25.5}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,9cm)
+\line(1,0){25.5}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,8.5cm)
+\line(1,0){25.5}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,7.7cm)
+\line(1,0){25.5}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,6.8cm)
+\line(1,0){25.5}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.1cm,8.2cm)
+\line(1,0){25.5}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.2cm,6.4cm)
+\tiny{b\hspace{0.4cm}C}\\
+\hspace{0.55cm}b
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.2cm,7.8cm)
+\tiny{a\hspace{0.4cm}a}\\
+\hspace{0.55cm}B
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.5cm,8.3cm)
+\tiny{$\alpha$}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(3.5cm,9.1cm)
+\tiny{ST}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(2.0cm,6.4cm)
+\fbox{$>_{0}$}
+\end{textblock*}
+
+\begin{textblock*}{11cm}(2.0cm,7.7cm)
+\fbox{$<_{0}$}
+\end{textblock*}
+
 \end{frame}
 
 
@@ -4534,6 +4837,1266 @@ Explicați cum rezolvă analiza sintactică bazată pe relațiile de precedenț�
 
 
 %////////////////////////////////////////////////
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă (Wirth-Weber)}
+
+\vfill
+\begin{center}
+Nikolaus Wirth\\
+Inventatorul lui: Algol W, Euler,\\
+Modula, Oberon, Pascal
+\begin{figure}[b]
+\includegraphics[scale=0.5]{img/Nikolaus.jpg}
+\end{figure}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+\vfill
+\begin{center}
+\textcolor{ballblue}{\underline{ \textbf{Relațiile de precedență simplă (Wirth-Weber)}}}
+\end{center}
+\textcolor{ballblue}{\textbf{Relațiile}} se scriu astfel:$ <_{w}, =_{w}, >_{w}.$\\
+Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta \in V_{N} \cup \Sigma$\\
+\textcolor{red}{\textbf{(1)}} \textcolor{blue}{\textbf{ $ \alpha =_{w} \beta$ }}  $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in$ P ( $\alpha =_{w} \beta $ dacă sunt în partea dreaptă unul după altul)\\
+\textcolor{red}{\textbf{(2)}} \textcolor{blue}{\textbf{ $ \alpha <_{w} \beta$ }}  $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in P si B \Rightarrow_{+} \beta z ( \alpha <_{w} \beta$  dacă $\alpha$ este înaintea lui B care trece în $\beta z)$\\
+\textcolor{red}{\textbf{(3)}} \textcolor{blue}{\textbf{ $ \alpha >_{w} \beta$ }}   $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in P si B \Rightarrow_{+} z \alpha$ \\
+\hspace{2.2cm} sau\\
+\hspace{2.2cm} $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in P si B \Rightarrow_{+} z \alpha$ și C $\Rightarrow_{+} \beta w $ 
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+
+\resizebox{10cm}{7cm}{
+\begin{tikzpicture}
+
+\draw (-3,3) -- (2,3) -- (0,9) -- (-3,3); %triunghi
+\draw(0,9.5) node[]{A};
+\draw (-4,6) node []{(1)};
+\draw (0,2.5) node [] { $\alpha =_{w} \beta$};
+\draw (6,6) node [] {$\alpha =_{w} \beta$ dacă ele trebuiesc reduse în același timp nA};
+
+\draw (0,1) -- (-3,-4) -- (2,-4) -- (0,1);
+\draw (0,1) -- (2,-4) --  (3,-2) -- (0,1);
+\draw (0,1) -- (5,-4) -- (9,-4) -- (0,1);
+\draw (-3,-2) node[]{(2)};
+\draw (0,1.25) node []{A};
+\draw (1.5,-1.5) node [] {B};
+\draw (3.5,-4) node [] {$\alpha <_{w} \beta$};
+\draw (6.5,-0.5) node [] {$\alpha <_{w} \beta$ dacă $\beta$ trebuie redus mai întâi};
+\draw (7,-1) node [] {în B și apoi în A};
+
+\end{tikzpicture}
+}
+\end{frame}
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+
+\begin{center}
+\textcolor{white}{fill}\\
+\textcolor{white}{fill}\\
+
+\resizebox{11.5cm}{6.5cm}{
+\begin{tikzpicture}
+
+%stanga
+\draw (0,8.5) node[] {A};
+\draw (-6.5,2) node [] {(3)};
+\draw (-4.5,2) node [] {a)};
+\draw (0,8) -- (-4,2);
+\draw (0,8) -- (2,1);
+\draw (2,1) -- (0,-3) -- (4,-3) -- (2,1);
+\draw (2.5,1) node [] {B};
+\draw (0,8) -- (11,-2);
+\draw (6,-2) node [] {$\alpha >_{w} \beta$};
+\draw (0,8) -- (9,4);
+
+%dreapta
+\draw (20,8.5) node[]{A};
+\draw (14,2) node [] {b)};
+\draw (20,8) -- (16,4);
+\draw (20,8) -- (19,2);
+\draw (18.5,2) node [] {B};
+\draw (19,2) -- (17,-2) -- (19.5, -2) -- (19,2);
+\draw (20,8) -- (23,2);
+\draw (23,2) -- (21.5,-2) -- (24,-2) -- (23,2);
+\draw (23.5,2) node [] {C};
+\draw (20,8) -- (26,4);
+\draw (20.5,-2.5)  node [] {$\alpha >_{w} \beta$};
+
+\end{tikzpicture}
+}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+
+\textcolor{red}{\underline{\textbf{Observație:}}}\\
+{\small Relațiile de precență Wirth-Weber nu sunt simetrice $\Rightarrow$ $\alpha$ $>_{w}$ $\beta$ $\neq$ $\beta$ $<_{w} \alpha .$}
+\textcolor{red}{\underline{\textbf{Definiție:}}}\\
+
+\begin{itemize}
+ \item {\small O \textcolor{blue}{\underline{\textbf{gramatică Wirth-Weber}}} este o gramatică \underline{independentă de} \underline{ context}, fără reguli vide, reversibilă și în care orice pereche $\alpha$, $\beta$ verifică cel mult una din relațiile <, =, >.}
+ 
+ \item {\small O gramatică este \underline{reversibilă} dacă nu există mai multe producții cu aceeași parte dreaptă adică din A $\rightarrow \alpha$ și B $\rightarrow \alpha \Rightarrow$ A=B.}
+ \item {\small Relațiile sunt \underline{disjuncte} dacă între oricare două simboluri $\alpha, \beta$ există cel mult o relație în același timp.}
+
+\end{itemize}
+\lfoot{\tiny SUPORT DE CURS:Proiectarea translatoarelor}
+\rfoot{\tiny  ÎNDRUMĂTOR:prof. dr. Victor Patriciu}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+\textcolor{ballblue}{\underline{\textbf{Calculul relațiilor Wirth-Weber:}}}\\
+\textcolor{ballblue}{\textbf{(1) $\alpha =_{w}\beta$}} $\rightarrow$ este o relație între toate simbolurile succesive(vecine) din partea dreaptă a producțiilor.\\
+\textcolor{ballblue}{\textbf{(2) $\alpha =_{w}\beta$}} : A $\rightarrow$ x$\alpha$By. Trebuie calculat \textcolor{red}{\textbf{$FIRST^+$(B)}}\\
+\hspace{1.8cm} $\alpha$ $<_{w}$ $\beta$, ($\forall$)  \textcolor{red}{\textbf{$\beta \in FIRST^+$(B)}}\\
+\textcolor{ballblue}{\textbf{(3) $\alpha >_{w}\beta$}} :  A $\rightarrow$ xB$\beta$y \hspace{1cm} calculăm \textcolor{red}{\textbf{$LAST^+$(B)}}\\
+\hspace{2.2cm} A $\rightarrow$ xBCy \hspace{2.5cm} \textcolor{red}{\textbf{$FIRST^+$(C)}}\\
+
+\begin{center}
+	\textcolor{red}{$\alpha$ $\in$ $LAST^+$(B)}\\
+	\textcolor{red}{$\beta$ $\in$ $FIRST^+$(C) $\cap$ $\Sigma$}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+\textcolor{ballblue}{\underline{Observație:}}\\
+\begin{center}
+În urma calculului de precedență pot apărea \textcolor{ballblue}{\textbf{conflicte:}}\\
+\end{center}
+(1) $\alpha$ \textcolor{red}{$=_{w}$} $\beta$ se transformă în \textcolor{red}{$<_{w}$} : A $\rightarrow$ x$\alpha \beta$y $\in$ P\\
+ \hspace{0.5cm} $\alpha$ \textcolor{red}{$<_{w}$} $\beta$   \hspace{3.5cm} A $\rightarrow$ x$\alpha$Dy și D $\rightarrow$ $\beta$\\
+(2) $\alpha$ \textcolor{red}{$=_{w}$} $\beta$ se transformă în \textcolor{red}{$>_{w}$} : A $\rightarrow$ x$\alpha \beta$y $\in$ P\\
+ \hspace{0.5cm} $\alpha$ \textcolor{red}{$>_{w}$} $\beta$   \hspace{3.5cm} A $\rightarrow$ xC$\beta$y și C $\rightarrow$ $\alpha$\\
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+\begin{wraptable}{r}{7cm}
+\centering
+\scalebox{0.7}{
+\begin{tabular}{| c | c | c | c | c | c | c | c |}
+\hline
+	&	        S 	&	        A 	&	        a 	&	        b 	&	        c 	& 	        d 	& 	\$	\\
+\hline
+S 	& 	$<_{w}$	& 	$=_{w}$ 	& 	$<_{w}$ 	& 	$>_{w}$ 	& 	$<_{w}$ 	& 	$<_{w}$	& 	          \\
+\hline
+A 	& 	 		&  			&   			& 	$=_{w}$     	&  			&   			& 		 \\	
+\hline
+a 	& 	$=_{w}$	&  			&   	$<_{w}$	& 			&  			&   	$<_{w}$	& 		 \\	
+\hline
+b 	& 	$>_{w}$	&  			&   	$>_{w}$	& 	$>_{w}$	&  	$>_{w}$	&        $>_{w}$	&  $>_{w}$	 \\	
+\hline
+c 	& 	 		&  			&   			& 	$>_{w}$	&  			&   			& 		 \\	
+\hline
+d 	& 	$>_{w}$	&  			&   	$>_{w}$	& 	$>_{w}$	&  	$>_{w}$	&        $>_{w}$	&  $>_{w}$	 \\	
+\hline
+\$ 	& 	 		&  			&   	$<_{w}$	& 			&  			&   	$<_{w}$	& 		 \\	
+\hline
+\end{tabular}
+}
+\end{wraptable}
+\textcolor{ballblue}{\textbf{Exemplu:}}\\
+Fie \textcolor{ballblue}{gramatica:}\\
+\textcolor{red}{1. S $\rightarrow$ aSAb}\\
+\textcolor{red}{2. S $\rightarrow$ d}\\
+\textcolor{red}{3. S $\rightarrow$ S}\\
+\textcolor{red}{4. S $\rightarrow$ c}\\
+\textcolor{red}{\textbf{Matricea relațiilor de precedență:}}\\
+a$<_{w}$ $FIRST^+$(S);    $FIRST^+$(S)=\{a, d\}\; \\
+S$<_{w}$ $FIRST^*$(A);    $FIRST^+$(A)=\{a, c, d, S\}\; \\
+$LAST^=$(S)$>_{w}$ $FIRST^+$(A) $\rightleftharpoons$ \{b, d\} $>_{w}$ \{a, c, d, S\}\;\\
+
+$LAST^+$(A) $>_{w}$ \{b\}\; \hspace{2cm}   \{S, c, b, d\} $>_{w}$ \{b\}\; \\
+\vspace{6mm}
+\$ S \$ \\
+\$ $<_{w}$ $FIRST^*$(S) \hspace{2cm}   $\rightleftharpoons$ \$ $<_{w}$ \{a, d\}\; \\
+$LAST^+$(A) $>_{w}$ \$  \hspace{2cm}  $\rightleftharpoons$ \{b, d \} $>_{w}$ \$ \\
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+
+\textcolor{ballblue}{\textbf{\underline{Algoritmul de bază}}}  de tip \textcolor{ballblue}{\textbf{DR (Deplasează - Reduce)}}\\
+Starea automatului este dată de: ($\alpha$ , x\$, y)\\
+\textcolor{red}{\textbf{L(ADR)={w|(\$, w\$, $A$)|--(\$S, \$, $\alpha$)}}} ; $\alpha$ - reprezintă analiza dreapta a propoziției;\\
+\underline{\textbf{Definim:}}\\
+\textcolor{orange}{f - funcția deplasează-reduce} 
+\textcolor{red}{f:($V_{N}$ $\cup$ $\Sigma$) x $\Sigma \rightarrow$ \{ \underline{depl}, \underline{red}, \underline{accept}, \underline{error}\}\;}\\
+\textcolor{orange}{g -funcția de reducere}
+\textcolor{red}{g : ( $V_{N}$ $\cup$ $\Sigma$)$^*$ $\rightarrow$ \{1, 2, 3, ...\}\;} unde:\\
+\begin{center}
+($V_{N} \cup \Sigma)^*$  -  vârful stivei\;\\
+\{1,2,3, ... \} - numărul producțiilor\;\\
+\end{center}
+
+\textcolor{brown}{f($\alpha$,a) = \underline{depl} $\rightleftharpoons$ $\alpha$ $<_{w}$ a sau $\alpha$ $=_{w}$ a\; \\
+f($\alpha$,a) = \underline{red} $\rightleftharpoons$ $\alpha$ $>_{w}$ a\; \\
+f($\alpha$,a) = \underline{error} $\rightleftharpoons$ între $\alpha$ și a nu există relație de precedență\;\\
+f($\alpha$,a) = \underline{accept}}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+{\color{brown} \rule{\linewidth}{0.1mm} }
+
+\resizebox{\textwidth}{!}{\color{brown}{\textbf{
+    g ($\beta x_{1}, x_{2}, \dots , x_{n}) = i 
+    \iff 
+    \exists i: A \rightarrow x_{1}, x_{2}, \dots, x_{n} \in P 
+        \land \beta <_{w} x_{1}$ 
+}}}
+
+
+\textbf{\underline{Automatul evolueaza astfel:}}
+\begin{itemize}
+    \item \color{red}{\textbf{ 
+    ( $\alpha a, bx, \beta )  \|--^{d} (\alpha ab,x,\beta$)
+    } 
+    $\iff f(a,b) =$ deplasare}
+    
+    \item \color{red}{\textbf{(
+    $\alpha c \gamma a, bx, \beta ) \|--^{r} (\alpha c \gamma a, bx, \beta i)$
+    } 
+    $\iff f(a,b) =$ reducere }
+\end{itemize}
+    
+\begin{textblock*}{3.8cm}(9cm,5.2cm)
+    \color{red}{
+   f(a,b)=reducere \\
+   g(c$\gamma$a) = i\\
+   \resizebox{\textwidth}{!}{i este productia A $\to$ $\gamma$a $\in$ P}\\}
+\end{textblock*}
+
+f(S,S) nu poate fi;\\
+f(S,a) = deplasare\\
+f(S,b) = reducere\\
+f(S,c) = deplasare\\
+f(S,d) = deplasare\\
+f(A,b) = deplasare\\
+f(a,a) = deplasare\\
+
+\end{frame}
+
+\begin{frame}{Analizoare bazate pe \underline{precedenta simpla}}
+
+\begin{textblock*}{3.8cm}(1cm,2cm) 
+g ( SaSAb ) = 1\\
+g ( aaSAb ) = 1\\
+g ( \$aSAb ) = 1\\
+g ( Sd ) = 2\\
+g ( ad ) = 2\\
+g ( \$d ) = 2\\
+g ( SS ) = 3\\
+g ( Sc ) = 4\\
+\end{textblock*}
+
+\begin{textblock*}{3.8cm}(6cm,2cm) 
+\begin{tabular}{| l | c | c | c | c | c | c | l|}
+    \hline
+       & S & A & a & b & c & d & \$ \\
+     \hline
+     S & $<$ & $=$ & $<$ & $>$ & $<$ & $<$ &  \\
+     \hline
+     A &  &  &  & $=$ &  &  &  \\
+     \hline
+     a & $=$ &  & $<$ &  &  & $<$ &  \\
+     \hline
+     b & $>$ &  & $>$ & $>$ & $>$ & $>$ & $>$ \\
+     \hline
+     c &  &  &  & $>$ &  & &  \\
+     \hline
+     d & $>$ &  & $>$ & $>$ & $>$ & $>$ & $>$ \\
+     \hline
+     \$ &  &  & $<$ &  &  & $<$ &  \\
+    \hline
+\end{tabular}
+\end{textblock*}
+
+\begin{textblock*}{14cm}(1cm,6cm)
+\color{red}{\textbf{Fie w = adadcbb}} \\
+\color{black}{
+(\$, adadcbb\$, $\gamma$) 
+$\|--^{d}$ (\$a,dadcbb\$,1)  
+$\|--^{d}$ ( \$ad, adcbb\$, 1) }\\
+$\|--^{r}$(\$aS,adcbb\$,2) 
+$\|--^{d}$(\$aSa,dcbb\$,2)
+$\|--^{d}$(\$aSad,cbb\$,2)\\
+$\|--^{r}$(\$aSaS,cbb\$,22)
+$\|--^{d}$(\$aSaSc,bb\$,22)
+$\|--^{r}$(\$aSaSA,bb\$,224)\\
+$\|--^{d}$(\$aSaSAb,b\$,224)
+$\|--^{r}$(\$aSS,b\$,2241)
+$\|--^{r}$(\$aSA,b\$,22413)\\
+$\|--^{d}$(\$aSAb,\$,22413)
+$\|--^{r}$(\$S,\$,224131)
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+\tiny{
+\begin{textblock*}{14cm}(1cm,1.5cm)
+%\begin{cases}
+%procedura MZR este
+%\hspace{1cm}step $\gets$ false\\
+%\hspace{1cm}ISI;ISO;IST $\gets$ 1\\
+%\hspace{1cm}ST(IST) = \$ \\
+%\hspace{1cm} 
+%\begin{cases}
+%repeta\\
+%\hspace{0.1cm}
+%\begin{cases} daca f(ST(IST),ST(IST))=deplaseaza\\
+%\hspace{0.5cm} atunci \hspace{0.4cm} IST $\gets$ IST+1\\
+%\hspace{1.7cm} ST(IST) $\gets$ ST(ISI)\\
+%\hspace{1.7cm} ISI $\gets$ ISI+1\\
+%\hspace{0.1cm} ori daca f(ST(IST),ST(ISI))=reducere\\
+%\hspace{0.5cm} atunci *cauta in jos in stiva doua var x,y a.i x<y\\
+%\hspace{1.4cm} *reduce sirul y $\alpha$  si inlocuieste varful stivei conform\\
+%\hspace{1.4cm} g(xy $\alpha$)(i,A $\to y \alpha$)\\
+%\hspace{1.4cm} SO(ISO) $\gets$ g(xy $\alpha$)=i\\
+%\hspace{1.4cm} ISO $\gets$ ISO+1\\
+%\hspace{0.1cm} ori daca f(ST(IST),SI(ISI))=accept\\
+%\hspace{0.5cm} atunci *OK\\
+%\hspace{0.8cm} step $\gets$ true\\
+%\hspace{0.1cm} ori daca f(ST(IST),SI(ISI))=error\\
+%\hspace{0.5cm} atunci *N?\\
+%\hspace{0.5cm} step $\gets$ true\\
+
+%\end{cases}
+%\\prin caut step???
+%\end{cases}
+%\\sfarsit
+%\end{cases}
+\end{textblock*}
+}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}    
+    \begin{textblock*}{14cm}(5cm,3.6cm)
+    \textbf{1. E $\rightarrow$ E $+$ T}\\
+    \textbf{2. E $\to$ T}\\
+    \textbf{3. T $\to$ T * F}\\
+    \textbf{4. T $\to$ F}\\
+    \textbf{5. F $\to$ a}\\
+    \textbf{6. F $\to$ a(L)}\\
+    \textbf{7. F $\to$ (E)}\\
+    \textbf{8. L $\to$ E}\\
+    \textbf{9. L $\to$ E,L}
+    \end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}
+{Analiză sintactică bazată pe precedența slabă (Ichbiach - Morse)}
+
+\begin{textblock*}{14.8cm}(1cm,3.2cm)
+\color{black}{ $\beta \in \Sigma$ }
+\color{black}{ $\alpha \in V_{N} \cup \Sigma$}
+\color{black}{ (1)} \color{red} $\alpha <_{I} \beta$ \color{black} <=> \color{blue} (A $\rightarrow x \alpha \beta y \in P$) V (A $\rightarrow  x  \alpha By \in P$), unde B=$>^+\beta\gamma${;}  
+\end{textblock*}
+
+\begin{textblock*}{14.8cm}(1cm,4.6cm)
+\color{black}{ (2)} \color{red} $\alpha >_{I} \beta$ \color{black} <=> \color{blue} (A $\rightarrow x \alpha \beta y \in P$) V (A $\rightarrow x \alpha By \in P$), unde B=$>^+\beta\gamma${;}  
+\end{textblock*}
+
+\begin{textblock*}{14.8cm}(10.95cm,5.1cm)
+ C=$>$ $^+$ $\beta$z; 
+\end{textblock*}
+
+\begin{textblock*}{16.8cm}(1cm,5.9cm)
+\color{red}{\underline {Definirea unei gramatici cu precedenta slaba}}
+\color{black} Este o gramatica independenta de context, fara reguli vide si fara  variabile inutile, la care se definesc doua conditii :
+(1) \color{blue}{ $<_{I}$ si $>_{I}$ sunt disjuncte;}
+\color{black} (2) Pentru productii de forma \color{blue} A $\rightarrow$ x$\alpha$y, B $\rightarrow$ y \color{black} =>  nu exista o relatie intre \color{red} {$\alpha$} \color{black} si \color{red}\textbf B
+ \color{red} {(imbricare ilegala)}\color{black};
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+\begin{textblock*}{16.8cm}(1.8cm,2.5cm)
+\color{red}\underline{ Conflicte ce pot aparea :}
+\end{textblock*}
+
+\begin{textblock*}{16.8cm}(1cm,3.2cm)
+\color{blue} $\alpha <_{I} \beta$ si $\alpha >_{I} \beta$
+\color{black} {=>} exista A $\rightarrow  x \alpha\beta y sau A \rightarrow  xB \beta y $
+( $B{=>}^+z\alpha$)
+\\ {Rezolvare : }
+\end{textblock*}
+
+\begin{textblock*}{16.8cm}(2.6cm,4.2cm)
+{Se introduce o variabila C,}
+\color{red} {C$\rightarrow \alpha$}
+\color{black} si se fac inlocuirile:
+\\A $\rightarrow xC \beta$ y
+\\A $\rightarrow xC\beta$ y  {   =>} $\alpha _{I} \beta$
+\\C $\rightarrow \alpha$
+\end{textblock*}
+
+\begin{textblock*}{16.8cm}(1cm,6.2cm)
+\color{red} \textbf{ \underline {Algoritmul de analiza}} 
+\color {black} {este de tipul}
+\color{red}{“deplaseaza - reduce”}
+\\ \color{blue} {(f) - face deplasarea;}
+\end{textblock*}
+
+\begin{textblock*}{16.8cm}(1.5cm,7.2cm)
+\color{black}{f($\alpha$,a) = \underline{deplaseaza}, $\alpha <_{I}$ a}
+\\ \color{black} {f($\alpha$,a) = \underline{reduce}, $\alpha >_{I}$ a }
+\\ \color{black} {f(S,\$) = \underline{accept}}
+\\ \color{black} {f($\alpha$,a) = \underline{error} $<$=$>$ ($\alpha$,a) $\in$ R, unde R – multimea relatiilor.}
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+ \begin{textblock*}{15.8cm}(1cm,2.4cm)
+\color{blue} {(g) - face reducerea;}
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1.2cm,2.9cm)
+\color{black} {g($\alpha\beta$)=i $<=>$  }
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(4cm,3cm)
+\line(0,1){40}
+\end{textblock*}
+\begin{textblock*}{15.8cm}(4.2cm,3cm)
+\color{black} {($\exists$) i, B $\rightarrow$ $\beta$ $\in$ P (se alege productia cu partea \\ dreapta cea mai lunga care are sufixul $\beta$ ); 
+\\ Nu($\exists$) j, A$\rightarrow$x$\alpha\beta\in$ P, j$>$i;}
+\end{textblock*}
+
+\begin{textblock*}{16.9cm}(1cm,4.6cm)
+\color{black} {Observatie:}
+\\ \color{red} \small{Productiile sunt ordonate descrescator in functie de lungimea partii drepte.}
+\end{textblock*}
+
+\begin{textblock*}{16.9cm}(1cm,5.6cm)
+
+\color{black} \underline {Exemplu:}
+\\ 1. E $\rightarrow$ E+T
+\\ 2. E $\rightarrow$ T
+\\ 3. T $\rightarrow$ T*F
+\\ 4. T $\rightarrow$ F
+\\ 5. F $\rightarrow$ (E)
+\\ 6. F $\rightarrow$ (a)
+\end{textblock*}
+
+\begin{textblock*}{4.8cm}(5cm,5.5cm)
+\footnotesize
+\begin{tabular}{| l | c | c | c | c | c | c  | c | c | l|}
+    \hline
+       & E & T & F & a & ( & ) & + & * & \$ \\
+     \hline
+     E &  & & & &  &$<_{I}$  & $<_{I}$ & &\\
+     \hline
+     T &  &  &  &  &  & $>_{I}$ & $>_{I}$ & $<_{I}$ &$>_{I}$ \\
+     \hline
+     F &  &  &  &  &  & $>_{I}$ & $>_{I}$ & $>_{I}$ &$>_{I}$ \\
+     \hline
+     a &  &  &  &  &  & $>_{I}$ & $>_{I}$  & $>_{I}$ &$>_{I}$ \\
+     \hline
+     ( &$<_{I}$  & $<_{I}$ & $<_{I}$ & $<_{I}$ &$<_{I}$  & & & & \\
+     \hline
+     ) & &  &  &  &  & $>_{I}$ &  $>_{I}$ &$>_{I}$  & $>_{I}$\\
+     \hline
+     + &  & $<_{I}$  & $<_{I}$  & $<_{I}$  &  $<_{I}$ &  &  &  & \\
+    \hline
+     * &  &  &  $<_{I}$ &  $<_{I}$ &  $<_{I}$ &  &   &  &\\
+    \hline
+     \$ &  $<_{I}$ & $<_{I}$  & $<_{I}$  &  $<_{I}$ & $<_{I}$  &  &  &  & \\
+    \hline
+\end{tabular}
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+ \begin{textblock*}{15.8cm}(1cm,2.4cm)
+ \footnotesize
+$\bullet$ 
+LAST$^+$ (E)$>_{I}$ \{ + \} =$>$ \{ ),a \}$>_{I}$\{ + \}
+\\ $\bullet$ 
+\{+\}$<_{I}$ FIRST$^+$(T) =$>$ \{ + \}$<_{I}$ \{),a\}
+\\ $\bullet$ 
+T$<_{I}$\{ * \}, \{ * \}$<_{I}$ F
+\\ $\bullet$ 
+LAST$^+$ (T)$>_{I}$ \{ * \}
+\\ $\bullet$ 
+\{ * \}$<_{I}$ FIRST$^+$(F)
+\\ $\bullet$ 
+\{ ( \}$<_{I}$ E, E $<_{I}$ \{ ) \}
+\\ $\bullet$ 
+\{ ( \}$<_{I}$ FIRST$^+$(E) =$>$ \{ ( \}$<_{I}$ \{ E, T, F, (,a \}
+\\ $\bullet$ 
+LAST$^+$ (E)$>_{I}$ \{ ) \} =$>$ \{ T, F, ), a \} $>_{I}$ \{ ) \}
+\\ $\bullet$ 
+\$ $<_{I}$ FIRST$^+$(E)
+\\ $\bullet$ 
+LAST$^+$ (E)$>_{I}$\$
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1cm,6.4cm)
+\footnotesize
+\underline {\color{red} Analiza conflictelor} :
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1cm,6.8cm)
+\scriptsize
+E $\rightarrow$ E+T\\
+E $\rightarrow$ T
+
+ \hfill
+
+T $\rightarrow$ T*F\\
+T $\rightarrow$ F
+
+\end{textblock*}
+\begin{textblock*}{15.8cm}(2.8cm,6.8cm)
+
+\line(0,1){20}
+
+\line(0,1){20}
+
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(3.1cm,6.8cm)
+\small
+, verif. ( +, E ) =$>$ nu exista relatie
+
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(3.1cm,7.8cm)
+\small
+, verif. ( +, E ) =$>$ nu exista relatie
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(8.8cm,7cm)
+\line(0,1){30}
+\end{textblock*}
+
+\scriptsize
+\begin{textblock*}{15.8cm}(9cm,7.5cm)
+=$>$ nu exista imbricari ilegale
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+\begin{textblock*}{15.8cm}(1cm,2cm)
+\color{red} \textbf {f()}
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1.3cm,2.5cm)
+\color{black}
+    f( E,) ) = deplasare \\
+    f( E,+ ) = deplasare \\
+    f( T,) ) =  reducere
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1cm,4.2cm)
+... \\
+\color{red} \textbf {g()}
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1.3cm,5.1cm)
+\color{black}
+    g( E+T ) = 1 \\
+    g( T*F ) = 3 \\ 
+    g( (E) ) = 5 \\
+    g( T ) = 2   \\
+    g( F ) = 4   \\
+    g( a ) = 6   
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(1cm,8.2cm)
+... \\
+In sirul de intrare \\
+nu se introduc decat terminalele.
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(7.64cm,1.8cm)
+\tiny
+(\$,a*(a+a)\$,$\land$) $\xmapsto{d}$ (\$a,*(a+a)\$,$\land$)
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(9.1cm,2.2cm)
+\tiny
+$\xmapsto{r}$ (\$F,*(a+a)\$,6)
+\\ $\xmapsto{r}$ (\$T,*(a+a)\$,64)
+\\ $\xmapsto{d}$ (\$T*,(a+a)\$,64)
+\\ $\xmapsto{d}$ (\$T*(,a+a)\$,64)
+\\ $\xmapsto{d}$ (\$T*(a,+a)\$,64)
+\\ $\xmapsto{r}$ (\$T*(F,+a)\$,646)
+\\ $\xmapsto{r}$ (\$T*(T,+a)\$,6464)
+\\ $\xmapsto{r}$ (\$T*(E,+a)\$,64642)
+\\ $\xmapsto{d}$ (\$T*(E+,a)\$,64642)
+\\ $\xmapsto{d}$ (\$T*(E+a,)\$,64642)
+\\ $\xmapsto{r}$ (\$T*(E+F,)\$,646426)
+\\ $\xmapsto{r}$ (\$T*(E+T,)\$,6464264)
+\\ $\xmapsto{r}$ (\$T*(E,)\$,64642641)
+\\ $\xmapsto{d}$ (\$T*(E),\$,64642641)
+\\ $\xmapsto{r}$ (\$T*F,\$,646426415)
+\\ $\xmapsto{r}$ (\$T,\$,6464264153)
+\\ $\xmapsto{r}$ (\$TE,\$,64642641532)
+\\ $\xmapsto{a}$
+\end{textblock*}
+
+\begin{textblock*}{15.8cm}(7.9cm,8.4cm)
+\tiny
+Sirul reducerilor stanga 64642641532 \\
+Sirul derivarilor dreapta 23514624646
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+\begin{textblock*}{16cm}(1.2cm,3cm)
+\textbf
+{1. E $\rightarrow$ E+T \\
+2. E $\rightarrow$ T    \\
+3. T $\rightarrow$ T*F  \\
+4. T $\rightarrow$ F    \\ 
+5. F $\rightarrow$ a    \\ 
+6. F $\rightarrow$ a(L) \\
+7. F $\rightarrow$ (E)   \\
+8. L $\rightarrow$ E \\
+9. L $\rightarrow$ E,L 
+}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(1cm,2.5cm)
+\line(1,0){85}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(1cm,7.5cm)
+\line(1,0){85}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(1cm,2.5cm)
+\line(0,1){143}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(4cm,2.5cm)
+\line(0,1){143}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,1.7cm)
+\footnotesize
+\textbf{\color{red}{\underline {1.Calcul relatii W-W}}}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,2.3cm) 
+\tiny
+\line(1,0){143} \\ 
+$\bullet$ E {\color{red}{=}} + \\
+$\bullet$ + {\color{red}{=}} T \\ 
+$\bullet$ Last (E) {\color{red}{$>$}} + \hspace{12mm} \{ T, F, a, ) \} {\color{red}{$>$}} +\\ 
+$\bullet$ + {\color{red}{$<$}} First (T) \hspace{12mm} + {\color{red}{$<$}} \{ T, F, a, ( \}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,3.4cm) 
+\tiny
+\line(1,0){143} \\ 
+$\bullet$ T {\color{red}{=}} * \\
+$\bullet$ * {\color{red}{=}} F \\ 
+$\bullet$ Last (T) {\color{red}{$>$}} * \hspace{12mm} \{F, a, ) \} {\color{red}{$>$}} * \\ 
+$\bullet$ * {\color{red}{$<$}} First (F) \hspace{12mm} * {\color{red}{$<$}} \{ a, ( \}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,4.5cm) 
+\tiny
+\line(1,0){143} \\ 
+$\bullet$ a {\color{red}{=}} ( \\
+$\bullet$ ( {\color{red}{=}} L \\ 
+$\bullet$ L {\color{red}{$=$}} )  \\
+$\bullet$ ( {\color{red}{$<$}} First (L) \hspace{12mm} ( {\color{red}{$<$}} \{E, T, F, a, (\}  \\
+$\bullet$ Last (L) {\color{red}{$>$}} )  \hspace{12mm} \{E, L, T, F, a )\} {\color{red}{$>$}} )
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,5.8cm) 
+\tiny
+\line(1,0){143} \\ 
+$\bullet$ ( {\color{red}{=}} E \\
+$\bullet$ E {\color{red}{=}} ) \\ 
+$\bullet$ ( {\color{red}{$<$}} First (E) \hspace{12mm}  ( {\color{red}{$<$}} \{E, T, F, a, (\}\\
+$\bullet$ Last (E) {\color{red}{$>$}} )  \hspace{12mm} \{T, F, a, ) \} {\color{red}{$>$}} )
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,6.9cm) 
+\tiny
+\line(1,0){143} \\ 
+$\bullet$ E {\color{red}{=}} ,\\
+$\bullet$ , {\color{red}{=}} L \\ 
+$\bullet$ , {\color{red}{$<$}} First (L)  \hspace{12mm} , {\color{red}{$<$}} \{E, T, F, a, (\} \\
+$\bullet$ Last (E) {\color{red}{$>$}} ,   \hspace{12mm} \{T, F, a, ) \} {\color{red}{$>$}} ,
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,8cm) 
+\tiny
+\line(1,0){143} \\ 
+\tiny
+\$E\$
+\end{textblock*}
+
+\begin{textblock*}{16cm}(6cm,8.3cm) 
+\tiny
+\line(1,0){143} \\ 
+$\bullet$ \$ {\color{red}{=}} E \\
+$\bullet$ E {\color{red}{=}} \$ \\ 
+$\bullet$ \$ {\color{red}{$<$}} First (E) \hspace{12mm} \$ {\color{red}{$<$}} \{E, T, F, a, (\}   \\ 
+$\bullet$ Last (E) {\color{red}{$>$}} \$  \hspace{12mm} \{T, F, a, ) \} {\color{red}{$>$}} \$ \\
+\line(1,0){143} 
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+\footnotesize
+\center
+\begin{tabular}{| l | c | c | c | c | c | c  | c | c | c | c | l|}
+    \hline 
+    &\color{blue}  E & \color{blue} T &\color{blue}  F & \color{blue} L & \color{blue} + &\color{blue}  * &\color{blue}  a &\color{blue}  ( & \color{blue} ) & \color{blue} , &\color{blue} \$  \\
+     \hline
+   \color{blue}   E &  & & & &\color{red} =  & &  & &\color{red} \colorbox{yellow} {=$>$} &\color{red}  = & \color{red}=\\
+     \hline
+   \color{blue}   T &  &  &  &  & \color{red}$>$ &\color{red} = &  &  & $\color{red}>$&\color{red}$>$  &\color{red}$>$ \\
+     \hline
+    \color{blue}  F &  &  &  &  & \color{red}$>$ & \color{red}$>$ &  &  &\color{red}$>$&\color{red}$>$ &\color{red}$>$\\
+     \hline
+    \color{blue}  L &  &  &  &  &  &  &   &  & \color{red}= & &\\
+     \hline
+    \color{blue}  + &  &\color{red} \colorbox{yellow}{=$<$} &\color{red} $<$  &  &  & &\color{red}$<$ &\color{red}\color{red}$<$ &\color{red} $>$ & &\\
+     \hline
+    \color{blue}  * & &  & \color{red}= &  &  &  &\color{red} $<$  &\color{red} $<$ & & &\\
+     \hline
+    \color{blue}  a &  &   &   &   & \color{red}$>$  &\color{red} $>$ &\color{red} $<$ & = &\color{red} $>$& \color{red}$>$&\color{red}$>$\\
+    \hline
+    \color{blue}  ( & \color{red} \colorbox{yellow} {=$<$} & \color{red}$<$ & \color{red} $<$ &\color{red} =  &   &  &\color{red} $<$  &\color{red} $<$  & & &\\
+    \hline
+    \color{blue}  ) &   &   &   &   &\color{red} $>$  & \color{red}$>$ &  &  &\color{red} $>$&\color{red} $>$&\color{red}$>$\\
+    \hline
+    \color{blue}  , & \color{red} $<$  & \color{red} $<$ &\color{red} $<$  & \color{red}=  &   &  & \color{red}$<$ & \color{red} $<$ & & &\\
+    \hline
+    \color{blue}  \$ & \color{red} \colorbox{yellow} {=$<$} &\color{red}  $<$ &\color{red}  $<$ &   &   &  &\color{red} $<$ & \color{red}$<$ & & &\\
+    \hline
+\end{tabular}
+
+\begin{textblock*}{16cm}(-2cm,8cm) 
+ \fbox { $\bullet$ Nu este gramatica W-W se incearca I-M}
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+\begin{textblock*}{16cm}(5.2cm,3cm)
+\textbf
+{1. E $\rightarrow$ E+T \\
+2. E $\rightarrow$ T    \\
+3. T $\rightarrow$ T*F  \\
+4. T $\rightarrow$ F    \\ 
+5. F $\rightarrow$ a    \\ 
+6. F $\rightarrow$ a(L) \\
+7. F $\rightarrow$ (E)   \\
+8. L $\rightarrow$ E \\
+9. L $\rightarrow$ E,L 
+}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(5cm,2.5cm)
+\line(1,0){85}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(5cm,7.5cm)
+\line(1,0){85}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(5cm,2.5cm)
+\line(0,1){143}
+\end{textblock*}
+
+\begin{textblock*}{16cm}(8cm,2.5cm)
+\line(0,1){143}
+\end{textblock*}
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\begin{textblock*}{16cm}(2cm,3.5cm)
+(1)$<$instr$>$ $\rightarrow$ CALL i ({$<$}parametrii{$>$}) \\
+(2)$<$parametrii$>$ $\rightarrow$ $<$expr$>$/$<$parametrii$>$, $<$expr$>$ \\
+(3)$<$expresie$>$ $\rightarrow$ $<$term$>$/$<$expr$>$+term/$<$expr$>$-$<$ term$>$ \\
+(4)$<$term$>$ $\rightarrow$ $<$factor$>$/$<$term$>$*$<$factor$>$/$<$term$>$/$<$factor$>$ \\
+(5)$<$fact$>$ $\rightarrow$ i(i($<$expr$>$))
+\end{textblock*}
+
+\begin{textblock*}{16cm}(1cm,6.5cm)
+a).Sa se construiasca matricea rel de precedenta IM pentru instructiunea \\ FORTRAN de apel subrutine CALL\\
+b). Sa se verifice functionarea masinii pe instructiunea CALL polinom
+\end{textblock*}
+
+\begin{textblock*}{16cm}(2.5cm,8.2cm)
+(A+B$|$C, T1 (D2*D3(E))F)
+\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\begin{center}
+Aplicatie 2\\ 
+gramatici slaba (I-M)\\
+\tiny
+\setlength{\tabcolsep}{3pt}
+\begin{table}
+\begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c | c | c | c |}
+\hline
+        &<instr>&<param>&<expr>&<term>&<fact>&CALL&i&(&)&+&-&*&/&,&\$\\
+        \hline
+        <instr>&&&&&&&&&&&&&&&\\
+        \hline
+        <param>&&&&&&&&&<&&&&&<&\\
+        \hline
+        <expr>&&&&&&&&&>&<&<&&&>&\\
+        \hline
+        <term>&&&&&&&&&>&>&>&<&<&>&\\
+        \hline
+        <fact>&&&&&&&&&>&>&>&>&>&>&\\
+        \hline
+        CALL&&&&&&&<&&&&&&&&\\
+        \hline
+        I&&&&&&&&<&>&>&>&>&>&&\\
+        \hline
+        (&&<&<&<&<&&<&&&&&&&&\\
+        \hline
+        )&&&&&&&&&>&>&>&>&>&>&>\\
+        \hline
+        +&&&&<&<&&<&&&&&&&&\\
+        \hline
+        -&&&&<&<&&<&&&&&&&&\\
+        \hline
+        *&&&&&<&&<&&&&&&&&\\
+        \hline
+        /&&&&&<&&<&&&&&&&&\\
+        \hline
+        ,&&&<&<&<&&<&&&&&&&&\\
+        \hline
+        \$&<&&&&&<&&&&&&&&&\\
+        \hline
+\end{tabular}
+\end{table}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\vspace{2mm}
+\tiny
+%Exista un conflict <expr> $<_I$((din ultima  productie) <expr>$>_I$)(din $LAST^+$ (<parametrii>) $>_I$))\\
+
+\tiny
+Pentru a rezolva conflictul rescriu productia (5)\\
+(1)<instr> $\rightarrow$ call i(<param>)\\
+(2)<param> $\rightarrow$ <expr>/<param>,<expr>\\
+(3)<expr>  $\rightarrow$ <term>/<expr>+<term>/<expr>-<term>\\
+(4)<term>  $\rightarrow$ <fact>/<term>+<fact>/<term>/<fact>\\
+(5)<fact>  $\rightarrow$ <i/i<expr1>)\\
+(6)<expr1> $\rightarrow$ (<expr>\\
+
+%La matricea deja definita se adauga relatia <expr1> $<_I$)\\
+
+Rescriu productiile in ordinea descrescatoare a lungimii.\\
+(1)<instr> call i(<param>)\\
+(2)<fact> i <expr1>)\\
+(3)<param>{ $\rightarrow$}<param>,<expr>*\\
+(4)<expr> $\rightarrow$<expr>+<term>*\\
+(5)<expr> $\rightarrow$<expr>-<term>*\\
+(6)<term> $\rightarrow$<term>*<fact>*\\
+(7)<term> $\rightarrow$<term>/<fact>*\\
+(8)<fact> $\rightarrow$ i\\
+(9)<expr1>$\rightarrow$ (<expr>\\
+(10)<param>$\rightarrow$ <expr>*\\
+(11)<term>$\rightarrow$ <fact>*\\
+(12)<expr>$\rightarrow$ <term>*\\
+
+Trebuie verificate si conditiile de imbricare:\\
+Daca avem 
+%\left\{ \begin{array}{l l} A $\rightarrow \alpha y$ \\ 
+%B $\rightarrow$ y\\ \end{array} \right. sa nu avem relatii intre $\alpha$, B\\
++,- nu are rel cu <expr>\\
+*,/ nu are rel cu <term>\\
+nu are rel cu <param>\\
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\scriptsize
+\vspace{2 mm}
+(\$,call i(i+i/i,i(i*i(i)),i)\$,$\Lambda$)F\\
+$\xmapsto{d}$ (\$ call,i(i+i/i,i(i*i(i)),i)\$,$\Lambda$)\\
+$\xmapsto{d}$ (\$ call i(i,+i/i,i(i*i(i)),i)\$,$\Lambda$)\\
+$\xmapsto{r}$ (\$ call i(<fact>,+i/i,i(i*i(i)),i)\$,9)\\
+$\xmapsto{r}$ (\$ call i(<expr>,+i/i,i(i*i(i)),i)\$,9 11 12)\\
+$\xmapsto{d}$ (\$ call i(<expr>+,i/i,i(i*i(i)),i)\$,9 11 12)\\
+
+...\\
+
+<instr> $\rightarrow$ call i (<lista>)\\
+<instr> $\rightarrow$ n call i (<lista>)\\
+<lista> $\rightarrow$ <expr> / <lista>,<expr>\\
+<expr>  $\rightarrow$ <expr>+<term>/<expr>-<term>/<term>\\
+<term>  $\rightarrow$ <term>*<fact>/<term>/<fact>/<fact>\\
+<fact>  $\rightarrow$ i/i(<lista>)\\
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\tiny
+\begin{minipage}{0.30\textwidth}
+    
+    \color{black}
+1.E $\rightarrow$ E+T \\
+2.E $\rightarrow$ T \\
+3.T $\rightarrow$ T*F \\
+4.T $\rightarrow$ F \\
+5.F $\rightarrow$ a \\
+6.F $\rightarrow$ a(L) \\
+7.F $\rightarrow$ (E) \\
+8.L $\rightarrow$ E \\
+9.L $\rightarrow$ E,L \\
+    
+\end{minipage}%
+
+\hfill
+
+\begin{minipage}{0.65\textwidth}
+\setlength{\tabcolsep}{10pt}
+\color{red}\underline{\textbf{1. Calculul relatiilor W-W}}\\
+\color{black}
+\begin{tabular}{p{3cm} p{3cm}}
+\tiny
+    &\\
+    \hline
+%        \bullet\ E\ {\color{red}{=}}\ + &  \\
+%        \bullet\ +\ {\color{red}{=}}\ T  &  \\
+%        \bullet\ Last(E)\ {\color{red}{>}}\ +  &   
+%        \{T,F,a,)\} \ {\color{red}{>}}\ + \\
+%        \bullet\ +\ {\color{red}{<}} First(T) \ &  
+%        +\ {\color{red}{<}}\ \{T,F,a,(\} \\
+    \hline
+
+%        \bullet\ T\ {\color{red}{=}}\ * &  \\
+%        \bullet\ *\ {\color{red}{=}}\ F  &  \\
+%        \bullet\ Last(T)\ {\color{red}{>}}\ *  &   
+%        \{F,a,)\} \ {\color{red}{>}}\ * \\
+%        \bullet\ *\ {\color{red}{<}} First(F) \ &  
+%        *\ {\color{red}{<}}\ \{a,(\} \\
+    \hline
+
+%        \bullet\ a\ {\color{red}{=}}\ ( &  \\
+%        \bullet\ (\ {\color{red}{=}}\ L  &  \\
+%        \bullet\ L\ {\color{red}{=}}\ )  &  \\
+%        \bullet\ (\ {\color{red}{<}}\ First(L)  &   
+%        ( \ {\color{red}{<}}\ \{E,T,F,a,(\} \\
+%        \bullet\ Last(L)\ {\color{red}{>}} ) \ &  
+%        \{E,L,T,F,a,)\}\ {\color{red}{>}}\ ) \\
+    \hline
+
+%       \bullet\ (\ {\color{red}{=}}\ E &  \\
+%        \bullet\ E\ {\color{red}{=}}\ )  &  \\
+%        \bullet\ (\ {\color{red}{<}}\ First(E)  &   
+%        ( \ {\color{red}{<}}\ \{E,T,F,a,(\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} ) \ &  
+%        \{T,F,a,)\}\ {\color{red}{>}}\ ) \\
+    \hline
+
+%        \bullet\ E\ {\color{red}{=}}\ , &  \\
+%        \bullet\ ,\ {\color{red}{=}}\ L  &  \\
+%        \bullet\ ,\ {\color{red}{<}}\ First(L)  &   
+%        ,\ {\color{red}{<}}\ \{E,T,F,a,(\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} , \ &  
+%        \{T,F,a,)\}\ {\color{red}{>}}\ , \\
+    \hline
+        \$E\$& \\
+    \hline
+%        \bullet\ \$\ {\color{red}{=}}\ E &  \\
+%        \bullet\ E\ {\color{red}{=}}\ \$  &  \\
+%        \bullet\ \$\ {\color{red}{<}}\ First(E)  &   
+%        \$ \ {\color{red}{<}}\ \{E,T,F,a,(\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} \$ \ &  
+%        \{T,F,a,)\}\ {\color{red}{>}}\ \$\\
+    \hline
+    \end{tabular}
+\end{minipage}%
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\begin{center}
+\setlength{\tabcolsep}{5pt}
+\begin{table}
+\begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | }
+\hline
+        &\color{blue}E&\color{blue}T&\color{blue}F&\color{blue}L&\color{blue}+&\color{blue}*&\color{blue}a&\color{blue}(&\color{blue})&\color{blue},&\color{blue}\$\\
+        \hline
+        \color{blue}E&&&&&\color{red}=&&&&\color{red}\colorbox{yellow}{=>}&\color{red}=&\color{red}=\\
+        \hline
+        \color{blue}T&&&&&\color{red}>&\color{red}=&&&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}F&&&&&\color{red}>&\color{red}>&&&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}L&&&&&&&&&\color{red}=&&\\
+        \hline
+        \color{blue}+&&\color{red}\colorbox{yellow}{=<}&\color{red}<&&&&\color{red}<&\color{red}<&\color{red}>&&\\
+        \hline
+        \color{blue}*&&&\color{red}=&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue}a&&&&&\color{red}>&\color{red}>&&\color{red}=&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}(&\color{red}\colorbox{yellow}{=<}&\color{red}<&\color{red}<&\color{red}=&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue})&&&&&\color{red}>&\color{red}>&&&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue},&\color{red}<&\color{red}<&\color{red}<&\color{red}=&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue}\$&\color{red}\colorbox{yellow}{=<}&\color{red}<&\color{red}<&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+
+\end{tabular}
+\end{table}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\scriptsize
+\color{red}{2. Modificarea gramaticii}\\
+\ \\
+{\color{blue}{+}}{\colorbox{yellow}{ {\color{red}{=<}}}}{\color{blue}{T}}\\
+\color{black}
+1. E $\rightarrow$ EPT\\
+2. P $\rightarrow$ +\\
+\ \\
+\color{blue}{(}\colorbox{yellow}{ \color{red}{=<}}\color{blue}{E}\\
+\color{blue}{E}\colorbox{yellow}{ \color{red}{=<}}\color{blue}{)}\\
+\color{black}
+3. F $\rightarrow$ a(L)\\
+4. F $\rightarrow$ SED\\
+5. D $\rightarrow$ )\\
+6. S $\rightarrow$ (\\
+\ \\
+7. E $\rightarrow$ T\\
+8. T $\rightarrow$ T*F\\
+9. T $\rightarrow$ F\\
+10. F $\rightarrow$ a\\
+11. L $\rightarrow$ E\\
+12. L $\rightarrow$ E,L\\
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\tiny
+\begin{minipage}{0.30\textwidth}
+    \color{red}\underline{\textbf{3. Calculul relatiilor W-W}}\\
+    \color{black}
+    E $\rightarrow$ EPT\\
+    E $\rightarrow$ T\\
+    T $\rightarrow$ T*F\\
+    T $\rightarrow$ F\\
+    F $\rightarrow$ a(L)\\
+    F $\rightarrow$ SED\\
+    F $\rightarrow$ a\\
+    L $\rightarrow$ E\\
+    L $\rightarrow$ E,L\\
+    S $\rightarrow$ (\\
+    D $\rightarrow$ )\\
+    P $\rightarrow$ +\\
+    
+\end{minipage}%
+\hfill
+\begin{minipage}{0.65\textwidth}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{p{3cm} p{3cm}}
+\tiny
+    &\\
+    \hline
+%        \bullet\ E\ {\color{red}{=}}\ P &  \\
+%        \bullet\ P\ {\color{red}{=}}\ T  &  \\
+%        \bullet\ E\ {\color{red}{<}}\ First(P)  &   
+%        E \ {\color{red}{<}}\ \{+\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} First(P) \ &  
+%        \{T,F,D,a,)\} \ {\color{red}{>}}\ \{+\} \\
+%        \bullet\ P\ {\color{red}{<}}\ First(T)  &   
+%        P \ {\color{red}{<}}\ \{T,F,S,a,(\} \\
+%        \bullet\ Last(P)\ {\color{red}{>}} First(T) \ &  
+%        \{+\} \ {\color{red}{>}}\ \{T,F,S,a,(\} \\
+    \hline
+
+%        \bullet\ a\ {\color{red}{=}}\ ( &  \\
+%        \bullet\ (\ {\color{red}{=}}\ L  &  \\
+%        \bullet\ L\ {\color{red}{=}}\ )  &  \\
+%        \bullet\ ( \ {\color{red}{<}}\ First(L)  &   
+%        D \ {\color{red}{<}}\ \{E,T,F,S,a,(\} \\
+%        \bullet\ Last(L)\ {\color{red}{>}} ) \ &  
+%        \{E,T,F,L,D,a,)\} \ {\color{red}{>}}\ \{)\} \\
+    \hline
+%        \bullet\ S\ {\color{red}{=}}\ E &  \\
+%        \bullet\ E\ {\color{red}{=}}\ D  &  \\
+%        \bullet\ S\ {\color{red}{<}}\ First(E)  &   
+%        S \ {\color{red}{<}}\ \{E,T,F,S,a,(\} \\
+%        \bullet\ Last(S)\ {\color{red}{>}} First(E) \ &  
+%        \{(\} \ {\color{red}{>}}\ \{E,T,F,S,a,(\} \\
+%        \bullet\ E\ {\color{red}{<}}\ First(D)  &   
+%        E \ {\color{red}{<}}\ \{)\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} First(D) \ &  
+%        \{T,F,D,a,)\} \ {\color{red}{>}}\ \{)\} \\
+    \hline
+
+%        \bullet\ T\ {\color{red}{=}}\ * &  \\
+%        \bullet\ *\ {\color{red}{=}}\ F  &  \\
+%        \bullet\ Last(T)\ {\color{red}{>}}\ *  &   
+%        \{F,D,a,)\} \ {\color{red}{>}}\ * \\
+%        \bullet\ *\ {\color{red}{<}} Firs(F) \ &  
+%        \ * \ {\color{red}{<}}\ \{S,a,(\} \\
+    \hline
+
+%        \bullet\ E\ {\color{red}{=}}\ , &  \\
+%        \bullet\ ,\ {\color{red}{=}}\ L  &  \\
+%        \bullet\ ,\ {\color{red}{<}}\ First(L)  &   
+%        ,\ {\color{red}{<}}\ \{E,T,F,S,a,(\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} , \ &  
+%        \{T,F,D,a,)\}\ {\color{red}{>}}\ , \\
+    \hline
+        \$E\$& \\
+    \hline
+%        \bullet\ \$\ {\color{red}{=}}\ E &  \\
+%        \bullet\ E\ {\color{red}{=}}\ \$  &  \\
+%        \bullet\ \$\ {\color{red}{<}}\ First(E)  &   
+%        \$ \ {\color{red}{<}}\ \{E,T,F,S,a,(\} \\
+%        \bullet\ Last(E)\ {\color{red}{>}} \$ \ &  
+%        \{T,F,D,a,)\}\ {\color{red}{>}}\ \$\\
+    \hline
+    \end{tabular}
+\end{minipage}%
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{table}
+\begin{tabular}{| c | c | c | c | c | c | c | c | c | c | c | c | c | c | c | }
+\hline
+        &\color{blue}E&\color{blue}T&\color{blue}F&\color{blue}L&\color{blue}D&\color{blue}S&\color{blue}P&\color{blue}+&\color{blue}\color{blue}*&\color{blue}a&\color{blue}(&\color{blue})&\color{blue},&\color{blue}\$\\
+        \hline
+        \color{blue}E&&&&&\color{red}=
+        &&\color{red}=&\color{red}<
+        &&&&\color{red}<>&\color{red}=&\color{red}=\\
+        \hline
+        \color{blue}T&&&&&&&&\color{red}>&\color{red}=&&&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}F&&&&&&&&\color{red}>&\color{red}>&&&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}L&&&&&&&&&&&&\color{red}=>&&\\
+        \hline
+        \color{blue}D&\color{red}<&\color{red}<
+        &\color{red}<&&&\color{red}<&&\color{red}>&\color{red}>&\color{red}<&\color{red}<&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}S&\color{red}=<&\color{red}<&\color{red}<&&&\color{red}<&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue}P&&\color{red}=<&\color{red}<&&&\color{red}<&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue}+&&\color{red}>&\color{red}>&&&\color{red}>&&&&\color{red}>&\color{red}>&&&\\
+        \hline
+        \color{blue}*&&&\color{red}=&&&\color{red}<&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue}a&&&&&&&&\color{red}>&\color{red}>&&\color{red}=&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue}(&\color{red}>&\color{red}>&\color{red}>&\color{red}=&&\color{red}>&&&&\color{red}>&\color{red}>&&&\\
+        \hline
+        \color{blue})&&&&&&&&\color{red}>&\color{red}>&&&\color{red}>&\color{red}>&\color{red}>\\
+        \hline
+        \color{blue},&\color{red}<&\color{red}<&\color{red}<&\color{red}=&&\color{red}<&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+        \color{blue}\$&\color{red}=<&\color{red}<&\color{red}<&&&\color{red}<&&&&\color{red}<&\color{red}<&&&\\
+        \hline
+
+\end{tabular}
+\end{table}
+\end{center}
+\scriptsize	
+\color{red}
+CONCLUZIE:\\
+Gramatica nu este W-W; se va incerca analiza cu LL1 sau precedenta slaba (I-M)\\
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\begin{center}
+    {Se considera urmatoarea gramatica de limbaj de tip PASCAL:}\\
+\end{center}
+\scriptsize
+    (1) <instructiune>::=\textbf{if}<exprl>\textbf{then}(<instructiune>)[\textbf{else}<instructiune>]\\
+    (2) <instructiune>::=\textbf{repeat}<instructiune>\textbf{until}<exprl>\\
+    (3) <instructiune>::=<factor>:=<factor>\\
+    (4) <exprl>::=<factor>\textbf{<}<factor>|<factor>\textbf{<=}<factor>\\
+    (5) <factor>::=i|i(<lista>)\\
+    (6) <lista>::=i|i,<lista>\\
+    (7) <comentariu>::=</\{<orice caracter>\}/>\\
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 

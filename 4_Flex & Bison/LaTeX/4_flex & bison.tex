@@ -1495,6 +1495,27 @@ Tutoriale gdb
 
 
 
+\begin{frame}{flex - Exercițiu}
+
+\begin{itemize}
+\item
+Să se implementeze folosind flex un instrument de analiză lexicală care, pentru un fişier de intrare care conţine cod sursă C/C++/C\#, să genereze un fişier de ieşire în care codul este aliniat cu numărul corespunzător de taburi, în funcţie de parantezele acolade.
+
+\item
+Să se implementeze folosind flex un instrument de analiză lexicală care, pentru un fişier de intrare care conţine cod sursă C/C++/C\#, să genereze un fişier de ieşire care:
+\begin{itemize}
+\item
+să conţină toate numele variabilelor globale;
+\item
+să conţină toate numele variabilelor locale pentru fiecare funcţie definită în parte;
+\item
+să conţină toate comentariile pentru instrucţiunile din fiecare funcţie în parte.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
 \begin{frame}{yacc/bison - Cuprins}
 \begin{itemize}
 \item
@@ -6246,6 +6267,24 @@ linie\underline{ }noua: \hspace{2mm}	.asciiz	"\textbackslash{n}"
 \end{center}
 
 \vspace{8mm} \hspace{80mm} s.a.m.d.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{flex \& bison - Întrebări recapitulative}
+\begin{itemize}
+\item
+Explicați utilitatea atomului lexical predefinit \textit{error} în funcționarea unui instrument de analiza gramaticală generat cu bison.
+\newline
+
+\item
+Fie un automat finit epsilon AF. Arătați care dintre flex și bison este cel mai ușor de folosit pentru a implementa un program care să verifice dacă o propoziție p dată aparține lui L(AF) și explicați.
+\newline
+
+\item
+Arătați de ce informații are nevoie bison/yacc pentru atomii lexicali, pentru a putea efectua analiza semantică.
+\end{itemize}
 \end{frame}
 
 
