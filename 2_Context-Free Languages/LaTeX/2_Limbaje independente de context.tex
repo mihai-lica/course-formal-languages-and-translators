@@ -5272,135 +5272,134 @@ $
 \begin{frame}
 {Analiză sintactică bazată pe precedența slabă (Ichbiach - Morse)}
 
-\begin{textblock*}{14.8cm}(1cm,3.2cm)
 \color{black}{ $\beta \in \Sigma$ }
 \color{black}{ $\alpha \in V_{N} \cup \Sigma$}
-\color{black}{ (1)} \color{red} $\alpha <_{I} \beta$ \color{black} <=> \color{blue} (A $\rightarrow x \alpha \beta y \in P$) V (A $\rightarrow  x  \alpha By \in P$), unde B=$>^+\beta\gamma${;}  
-\end{textblock*}
+\newline
 
-\begin{textblock*}{14.8cm}(1cm,4.6cm)
-\color{black}{ (2)} \color{red} $\alpha >_{I} \beta$ \color{black} <=> \color{blue} (A $\rightarrow x \alpha \beta y \in P$) V (A $\rightarrow x \alpha By \in P$), unde B=$>^+\beta\gamma${;}  
-\end{textblock*}
+\color{black}{ (1)} \color{red} $\alpha <_{I} \beta$ \color{black} $\iff$ \color{blue} $\exists$ (A $\rightarrow x \alpha \beta y \in P$) $\lor$ (A $\rightarrow  x  \alpha By \in P$), 
 
-\begin{textblock*}{14.8cm}(10.95cm,5.1cm)
- C=$>$ $^+$ $\beta$z; 
-\end{textblock*}
+unde:
 
-\begin{textblock*}{16.8cm}(1cm,5.9cm)
-\color{red}{\underline {Definirea unei gramatici cu precedenta slaba}}
-\color{black} Este o gramatica independenta de context, fara reguli vide si fara  variabile inutile, la care se definesc doua conditii :
-(1) \color{blue}{ $<_{I}$ si $>_{I}$ sunt disjuncte;}
-\color{black} (2) Pentru productii de forma \color{blue} A $\rightarrow$ x$\alpha$y, B $\rightarrow$ y \color{black} =>  nu exista o relatie intre \color{red} {$\alpha$} \color{black} si \color{red}\textbf B
- \color{red} {(imbricare ilegala)}\color{black};
-\end{textblock*}
+B$\Rightarrow^+\beta\gamma$
+\newline
+
+\color{black}{ (2)} \color{red} $\alpha >_{I} \beta$ \color{black} $\iff$ $\exists$ \color{blue} (A $\rightarrow x B \beta y \in P$) $\lor$ (A $\rightarrow x B C y \in P$), 
+
+unde:
+
+B$\Rightarrow^+ \gamma \alpha$
+
+C$\Rightarrow^+ \beta z$
+
+\end{frame}
+
+
+
+\begin{frame}
+{Analiză sintactică bazată pe precedența slabă (Ichbiach - Morse)}
+
+\color{red}{\underline {Gramatici cu precedenta slaba (Ichbiach - Morse)}}
+\newline
+
+\color{black} O gramatică cu precedență slabă (Ichbiach - Morse) este o gramatica independenta de context, fara reguli vide si fara  variabile inutile și care îndeplinește următoarele două condiții:
+
+(1) \color{blue}{ $<_{I}$ si $>_{I}$ sunt disjuncte}
+
+\color{black} 
+(2) Pentru regulile de producție de forma \color{blue} A $\rightarrow$ x$\alpha$y, B $\rightarrow$ y \color{black} nu exista o relatie intre \color{red} {$\alpha$} \color{black} si \color{red}\textbf B \color{red} {(imbricare ilegala)}\color{black}
+
 \end{frame}
 
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența slabă}
 
-\begin{textblock*}{16.8cm}(1.8cm,2.5cm)
-\color{red}\underline{ Conflicte ce pot aparea :}
-\end{textblock*}
+Conflicte posibile:
+\newline
 
-\begin{textblock*}{16.8cm}(1cm,3.2cm)
-\color{blue} $\alpha <_{I} \beta$ si $\alpha >_{I} \beta$
-\color{black} {=>} exista A $\rightarrow  x \alpha\beta y sau A \rightarrow  xB \beta y $
-( $B{=>}^+z\alpha$)
-\\ {Rezolvare : }
-\end{textblock*}
+$\alpha <_{I} \beta$ si $\alpha >_{I} \beta$
 
-\begin{textblock*}{16.8cm}(2.6cm,4.2cm)
-{Se introduce o variabila C,}
-\color{red} {C$\rightarrow \alpha$}
-\color{black} si se fac inlocuirile:
-\\A $\rightarrow xC \beta$ y
-\\A $\rightarrow xC\beta$ y  {   =>} $\alpha _{I} \beta$
-\\C $\rightarrow \alpha$
-\end{textblock*}
+$\iff$ $\exists$ A $\rightarrow  x \alpha\beta y$ $\lor$ $A \rightarrow  xB \beta y $
+( $B{\Rightarrow}^+z\alpha$)
+\newline
 
-\begin{textblock*}{16.8cm}(1cm,6.2cm)
-\color{red} \textbf{ \underline {Algoritmul de analiza}} 
-\color {black} {este de tipul}
-\color{red}{“deplaseaza - reduce”}
-\\ \color{blue} {(f) - face deplasarea;}
-\end{textblock*}
+Rezolvare:
+\newline
 
-\begin{textblock*}{16.8cm}(1.5cm,7.2cm)
-\color{black}{f($\alpha$,a) = \underline{deplaseaza}, $\alpha <_{I}$ a}
-\\ \color{black} {f($\alpha$,a) = \underline{reduce}, $\alpha >_{I}$ a }
-\\ \color{black} {f(S,\$) = \underline{accept}}
-\\ \color{black} {f($\alpha$,a) = \underline{error} $<$=$>$ ($\alpha$,a) $\in$ R, unde R – multimea relatiilor.}
-\end{textblock*}
+Se introduce un neterminal C, o regula de producție $C \rightarrow \alpha$ și se fac inlocuirile:
+
+$A \rightarrow x C \beta y$
+
+sau respectiv
+
+$A \rightarrow x C B y$ 
+
+rezultând
+
+$\alpha >_{I} \beta$
 \end{frame}
 
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența slabă}
 
- \begin{textblock*}{15.8cm}(1cm,2.4cm)
-\color{blue} {(g) - face reducerea;}
-\end{textblock*}
+\textbf{ Algoritmul de analiza este de tipul deplasare-reducere}
+\newline
 
-\begin{textblock*}{15.8cm}(1.2cm,2.9cm)
-\color{black} {g($\alpha\beta$)=i $<=>$  }
-\end{textblock*}
+f
+\newline
 
-\begin{textblock*}{15.8cm}(4cm,3cm)
-\line(0,1){40}
-\end{textblock*}
-\begin{textblock*}{15.8cm}(4.2cm,3cm)
-\color{black} {($\exists$) i, B $\rightarrow$ $\beta$ $\in$ P (se alege productia cu partea \\ dreapta cea mai lunga care are sufixul $\beta$ ); 
-\\ Nu($\exists$) j, A$\rightarrow$x$\alpha\beta\in$ P, j$>$i;}
-\end{textblock*}
+f($\alpha$,a) = \underline{depl}, $\alpha <_{I}$ a
 
-\begin{textblock*}{16.9cm}(1cm,4.6cm)
-\color{black} {Observatie:}
-\\ \color{red} \small{Productiile sunt ordonate descrescator in functie de lungimea partii drepte.}
-\end{textblock*}
+f($\alpha$,a) = \underline{red}, $\alpha >_{I}$ a
 
-\begin{textblock*}{16.9cm}(1cm,5.6cm)
+f(\$S,\$) = \underline{accept}
 
-\color{black} \underline {Exemplu:}
+f($\alpha$,a) = \underline{error} $\iff$ ($\alpha$,a) $\notin$ R, unde R este multimea relatiilor de precedență slabă
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+
+g
+\newline
+
+g($\alpha\beta$)=i 
+
+$\iff$
+
+($\exists$) i: B $\rightarrow$ $\beta$ $\in$ P (se alege regula de producție cu partea dreapta cea mai lunga, care are sufixul $\beta$ )
+
+$\land$
+
+($\nexists$) j: A$\rightarrow$x$\alpha\beta\in$ P, j$>$i
+\newline
+
+Observatie:
+
+Regulile de productie sunt ordonate descrescator in functie de lungimea partii drepte.
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă - Exemplu}
+
+Fie gramatica:
 \\ 1. E $\rightarrow$ E+T
 \\ 2. E $\rightarrow$ T
 \\ 3. T $\rightarrow$ T*F
 \\ 4. T $\rightarrow$ F
 \\ 5. F $\rightarrow$ (E)
 \\ 6. F $\rightarrow$ (a)
-\end{textblock*}
 
-\begin{textblock*}{4.8cm}(5cm,5.5cm)
-\footnotesize
-\begin{tabular}{| l | c | c | c | c | c | c  | c | c | l|}
-    \hline
-       & E & T & F & a & ( & ) & + & * & \$ \\
-     \hline
-     E &  & & & &  &$<_{I}$  & $<_{I}$ & &\\
-     \hline
-     T &  &  &  &  &  & $>_{I}$ & $>_{I}$ & $<_{I}$ &$>_{I}$ \\
-     \hline
-     F &  &  &  &  &  & $>_{I}$ & $>_{I}$ & $>_{I}$ &$>_{I}$ \\
-     \hline
-     a &  &  &  &  &  & $>_{I}$ & $>_{I}$  & $>_{I}$ &$>_{I}$ \\
-     \hline
-     ( &$<_{I}$  & $<_{I}$ & $<_{I}$ & $<_{I}$ &$<_{I}$  & & & & \\
-     \hline
-     ) & &  &  &  &  & $>_{I}$ &  $>_{I}$ &$>_{I}$  & $>_{I}$\\
-     \hline
-     + &  & $<_{I}$  & $<_{I}$  & $<_{I}$  &  $<_{I}$ &  &  &  & \\
-    \hline
-     * &  &  &  $<_{I}$ &  $<_{I}$ &  $<_{I}$ &  &   &  &\\
-    \hline
-     \$ &  $<_{I}$ & $<_{I}$  & $<_{I}$  &  $<_{I}$ & $<_{I}$  &  &  &  & \\
-    \hline
-\end{tabular}
-\end{textblock*}
 \end{frame}
 
 
 
-\begin{frame}{Analiză sintactică bazată pe precedența slabă}
+\begin{frame}{Analiză sintactică bazată pe precedența slabă - Exemplu}
  \begin{textblock*}{15.8cm}(1cm,2.4cm)
  \footnotesize
 $\bullet$ 
@@ -5468,6 +5467,37 @@ T $\rightarrow$ F
 \begin{textblock*}{15.8cm}(9cm,7.5cm)
 =$>$ nu exista imbricari ilegale
 \end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența slabă - Exemplu}
+
+\footnotesize
+\begin{tabular}{| l | c | c | c | c | c | c  | c | c | l|}
+    \hline
+       & E & T & F & a & ( & ) & + & * & \$ \\
+     \hline
+     E &  & & & &  &$<_{I}$  & $<_{I}$ & &\\
+     \hline
+     T &  &  &  &  &  & $>_{I}$ & $>_{I}$ & $<_{I}$ &$>_{I}$ \\
+     \hline
+     F &  &  &  &  &  & $>_{I}$ & $>_{I}$ & $>_{I}$ &$>_{I}$ \\
+     \hline
+     a &  &  &  &  &  & $>_{I}$ & $>_{I}$  & $>_{I}$ &$>_{I}$ \\
+     \hline
+     ( &$<_{I}$  & $<_{I}$ & $<_{I}$ & $<_{I}$ &$<_{I}$  & & & & \\
+     \hline
+     ) & &  &  &  &  & $>_{I}$ &  $>_{I}$ &$>_{I}$  & $>_{I}$\\
+     \hline
+     + &  & $<_{I}$  & $<_{I}$  & $<_{I}$  &  $<_{I}$ &  &  &  & \\
+    \hline
+     * &  &  &  $<_{I}$ &  $<_{I}$ &  $<_{I}$ &  &   &  &\\
+    \hline
+     \$ &  $<_{I}$ & $<_{I}$  & $<_{I}$  &  $<_{I}$ & $<_{I}$  &  &  &  & \\
+    \hline
+\end{tabular}
+
 \end{frame}
 
 
