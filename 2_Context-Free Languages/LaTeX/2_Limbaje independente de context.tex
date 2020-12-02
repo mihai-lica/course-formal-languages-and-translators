@@ -2648,10 +2648,10 @@ T1B: return\\
 \textbf{F}: \= check(a) FA\\
             \> check(() FB\\
             \> error\\
-FA: pop(a)\\
+FA: pop (a)\\
     \> call F1\\
     \> return\\
-FB: pop(()\\
+FB: pop (()\\
     \> call E\\
     \> check()) FC\\
     \> error\\
@@ -2674,8 +2674,9 @@ FC: pop ())\\
 F1A: pop (()\\
      \> call L\\
      \> check ()) F1C\\
+     \> error \\     
 F1C: pop ())\\
-F1B: return())\\
+F1B: return\\
 \end{tabbing}
 \end{frame}
 
@@ -4799,43 +4800,6 @@ Să se construiască un analizor sintactic ascendent bazat pe relațiile de prec
 
 
 
-\begin{frame}{Întrebări recapitulative}
-\begin{itemize}
-\item
-Fie $AP1=(Q, \Sigma, \Gamma, f, q_0, z_0, F)$ un automat finit cu stivă care implementează analiza sintactică descendentă pentru gramatica $G=(\Sigma, V_N, S, P)$ și fie $AP2=(Q', \Sigma ', \Gamma ', f', q_0 ', z_0 ', F')$ un automat finit cu stivă care implementează analiza sintactică ascendentă pentru aceeași gramatică. Arătați care sunt diferențele dintre elementele care definesc AP1 și cele care îl definesc pe AP2 și explicați.
-\newline
-
-\item
-Explicați de ce este nedeterminist algoritmul general de analiză sintactică ascendentă.
-\newline
-
-\item
-Explicați rolul relației de precedență operator mai mare în analiza sintactică corespunzătoare.
-
-\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}{Întrebări recapitulative}
-\begin{itemize}
-\item
-Enumerați și explicați diferențele dintre automatul finit cu stivă definit pentru analiza sintactică descendentă și automatul finit cu stivă definit pentru analiza sintactică ascendentă.
-\newline
-
-\item
-Explicați care este diferența dintre configurația inițială a automatului finit cu stivă pentru analiza sintactică LL(1) și pentru analiza sintactică bazată pe precedența operator.
-\newline
-
-\item
-Explicați cum rezolvă analiza sintactică bazată pe relațiile de precedență operator nedeterminismul algoritmului generic de analiză sintactică ascendentă.
-\newline
-
-\end{itemize}
-\end{frame}
-
-
-
 %////////////////////////////////////////////////
 
 
@@ -4856,17 +4820,21 @@ Modula, Oberon, Pascal
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
-\vfill
+\textbf{Relațiile de precedență simplă (Wirth-Weber)}
+
 \begin{center}
-\textcolor{ballblue}{\underline{ \textbf{Relațiile de precedență simplă (Wirth-Weber)}}}
+$ <_{w}, =_{w}, >_{w}$
 \end{center}
-\textcolor{ballblue}{\textbf{Relațiile}} se scriu astfel:$ <_{w}, =_{w}, >_{w}.$\\
-Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta \in V_{N} \cup \Sigma$\\
-\textcolor{red}{\textbf{(1)}} \textcolor{blue}{\textbf{ $ \alpha =_{w} \beta$ }}  $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in$ P ( $\alpha =_{w} \beta $ dacă sunt în partea dreaptă unul după altul)\\
-\textcolor{red}{\textbf{(2)}} \textcolor{blue}{\textbf{ $ \alpha <_{w} \beta$ }}  $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in P si B \Rightarrow_{+} \beta z ( \alpha <_{w} \beta$  dacă $\alpha$ este înaintea lui B care trece în $\beta z)$\\
-\textcolor{red}{\textbf{(3)}} \textcolor{blue}{\textbf{ $ \alpha >_{w} \beta$ }}   $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in P si B \Rightarrow_{+} z \alpha$ \\
+
+Fie $ \alpha, \beta \in V_{N} \cup \Sigma$\\
+
+\textcolor{red}{\textbf{(1)}} \textcolor{blue}{\textbf{ $ \alpha =_{w} \beta$ }}  $\iff$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in$ P\\
+
+\textcolor{red}{\textbf{(2)}} \textcolor{blue}{\textbf{ $ \alpha <_{w} \beta$ }}  $\iff$ $\exists$ $A$ $\rightarrow$  $x\alpha B y \in P \land B \Rightarrow^{+} \beta z$\\
+
+\textcolor{red}{\textbf{(3)}} \textcolor{blue}{\textbf{ $ \alpha >_{w} \beta$ }}   $\iff$ $\exists$ $A$ $\rightarrow$  $x B \beta y \in P \land B \Rightarrow^{+} z \alpha$ \\
 \hspace{2.2cm} sau\\
-\hspace{2.2cm} $\rightleftharpoons$ $\exists$ $A$ $\rightarrow$  $x\alpha\beta y \in P si B \Rightarrow_{+} z \alpha$ și C $\Rightarrow_{+} \beta w $ 
+\hspace{2.2cm} $\iff$ $\exists$ $A$ $\rightarrow$  $x B C y \in P \land B \Rightarrow^{+} z \alpha \land C \Rightarrow^{+} \beta w $ 
 
 \end{frame}
 
@@ -4881,7 +4849,7 @@ Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta
 \draw(0,9.5) node[]{A};
 \draw (-4,6) node []{(1)};
 \draw (0,2.5) node [] { $\alpha =_{w} \beta$};
-\draw (6,6) node [] {$\alpha =_{w} \beta$ dacă ele trebuiesc reduse în același timp nA};
+\draw (6,6) node [] {$\alpha =_{w} \beta$ dacă ele trebuie reduse în același timp la A};
 
 \draw (0,1) -- (-3,-4) -- (2,-4) -- (0,1);
 \draw (0,1) -- (2,-4) --  (3,-2) -- (0,1);
@@ -4891,7 +4859,7 @@ Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta
 \draw (1.5,-1.5) node [] {B};
 \draw (3.5,-4) node [] {$\alpha <_{w} \beta$};
 \draw (6.5,-0.5) node [] {$\alpha <_{w} \beta$ dacă $\beta$ trebuie redus mai întâi};
-\draw (7,-1) node [] {în B și apoi în A};
+\draw (7,-1) node [] {la B și apoi la A};
 
 \end{tikzpicture}
 }
@@ -4942,13 +4910,14 @@ Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
 
 \textcolor{red}{\underline{\textbf{Observație:}}}\\
-{\small Relațiile de precență Wirth-Weber nu sunt simetrice $\Rightarrow$ $\alpha$ $>_{w}$ $\beta$ $\neq$ $\beta$ $<_{w} \alpha .$}
+{\small Relațiile de precență Wirth-Weber nu sunt simetrice, adică dacă $\alpha$ $>_{w}$ $\beta$ nu înseamnă că și $\beta$ $<_{w} \alpha .$}\\
+
 \textcolor{red}{\underline{\textbf{Definiție:}}}\\
 
 \begin{itemize}
- \item {\small O \textcolor{blue}{\underline{\textbf{gramatică Wirth-Weber}}} este o gramatică \underline{independentă de} \underline{ context}, fără reguli vide, reversibilă și în care orice pereche $\alpha$, $\beta$ verifică cel mult una din relațiile <, =, >.}
+ \item {\small O \textcolor{blue}{\underline{\textbf{gramatică Wirth-Weber}}} este o gramatică \underline{independentă de} \underline{ context}, fără reguli vide, reversibilă și în care orice pereche $\alpha$, $\beta$ verifică cel mult una din relațiile $<_w, =_w, >_w$.}
  
- \item {\small O gramatică este \underline{reversibilă} dacă nu există mai multe producții cu aceeași parte dreaptă adică din A $\rightarrow \alpha$ și B $\rightarrow \alpha \Rightarrow$ A=B.}
+ \item {\small O gramatică este \underline{reversibilă} dacă nu există mai multe producții cu aceeași parte dreaptă, căci din A $\rightarrow \alpha$ și B $\rightarrow \alpha \Rightarrow$ A=B.}
  \item {\small Relațiile sunt \underline{disjuncte} dacă între oricare două simboluri $\alpha, \beta$ există cel mult o relație în același timp.}
 
 \end{itemize}
@@ -4959,17 +4928,15 @@ Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
-\textcolor{ballblue}{\underline{\textbf{Calculul relațiilor Wirth-Weber:}}}\\
-\textcolor{ballblue}{\textbf{(1) $\alpha =_{w}\beta$}} $\rightarrow$ este o relație între toate simbolurile succesive(vecine) din partea dreaptă a producțiilor.\\
-\textcolor{ballblue}{\textbf{(2) $\alpha =_{w}\beta$}} : A $\rightarrow$ x$\alpha$By. Trebuie calculat \textcolor{red}{\textbf{$FIRST^+$(B)}}\\
-\hspace{1.8cm} $\alpha$ $<_{w}$ $\beta$, ($\forall$)  \textcolor{red}{\textbf{$\beta \in FIRST^+$(B)}}\\
-\textcolor{ballblue}{\textbf{(3) $\alpha >_{w}\beta$}} :  A $\rightarrow$ xB$\beta$y \hspace{1cm} calculăm \textcolor{red}{\textbf{$LAST^+$(B)}}\\
-\hspace{2.2cm} A $\rightarrow$ xBCy \hspace{2.5cm} \textcolor{red}{\textbf{$FIRST^+$(C)}}\\
+\textbf{Calculul relațiilor Wirth-Weber:}\\
 
-\begin{center}
-	\textcolor{red}{$\alpha$ $\in$ $LAST^+$(B)}\\
-	\textcolor{red}{$\beta$ $\in$ $FIRST^+$(C) $\cap$ $\Sigma$}
-\end{center}
+\textcolor{ballblue}{\textbf{(1) $\alpha =_{w}\beta$}} $\rightarrow$ este o relație între toate simbolurile succesive (vecine) din partea dreaptă a regulilor de producție\\
+
+\textcolor{ballblue}{\textbf{(2) $\alpha <_{w}\beta$}} $\iff$ A $\rightarrow$ x$\alpha$By $\in P$ $\land$ \textcolor{red}{\textbf{$\beta \in FIRST^+$(B)}}\\
+
+\textcolor{ballblue}{\textbf{(3) $\alpha >_{w}\beta$}} $\iff$  A $\rightarrow$ xB$\beta$y $\in P$ $\land$ \textcolor{red}{\textbf{$\alpha \in LAST^+$(B)}}\\
+
+$\lor$ A $\rightarrow$ xBCy $\in P$, \textcolor{red}{$\alpha$ $\in$ $LAST^+$(B),} \textcolor{red}{\textbf{$\beta \in FIRST^+$(C)}}\\
 \end{frame}
 
 
@@ -4977,18 +4944,95 @@ Fie \textcolor{ballblue}{\textbf{\underline{două simboluri}}} : $ \alpha, \beta
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
 \textcolor{ballblue}{\underline{Observație:}}\\
 \begin{center}
-În urma calculului de precedență pot apărea \textcolor{ballblue}{\textbf{conflicte:}}\\
+În urma calculului relațiilor de precedență simplă pot apărea \textcolor{ballblue}{\textbf{conflicte:}}\\
 \end{center}
-(1) $\alpha$ \textcolor{red}{$=_{w}$} $\beta$ se transformă în \textcolor{red}{$<_{w}$} : A $\rightarrow$ x$\alpha \beta$y $\in$ P\\
- \hspace{0.5cm} $\alpha$ \textcolor{red}{$<_{w}$} $\beta$   \hspace{3.5cm} A $\rightarrow$ x$\alpha$Dy și D $\rightarrow$ $\beta$\\
-(2) $\alpha$ \textcolor{red}{$=_{w}$} $\beta$ se transformă în \textcolor{red}{$>_{w}$} : A $\rightarrow$ x$\alpha \beta$y $\in$ P\\
- \hspace{0.5cm} $\alpha$ \textcolor{red}{$>_{w}$} $\beta$   \hspace{3.5cm} A $\rightarrow$ xC$\beta$y și C $\rightarrow$ $\alpha$\\
+
+(1) $\alpha$ \textcolor{red}{$=_{w}$} $\beta$ se transformă în \textcolor{red}{$<_{w}$} : A $\rightarrow$ x$\alpha \beta$y\\
+ \hspace{0.5cm} $\alpha$ \textcolor{red}{$<_{w}$} $\beta$   \hspace{3.5cm} A $\rightarrow$ x$\alpha$Dy și D $\Rightarrow^+$ $\beta z$\\
+ 
+(2) $\alpha$ \textcolor{red}{$=_{w}$} $\beta$ se transformă în \textcolor{red}{$>_{w}$} : A $\rightarrow$ x$\alpha \beta$y\\
+ \hspace{0.5cm} $\alpha$ \textcolor{red}{$>_{w}$} $\beta$   \hspace{3.5cm} A $\rightarrow$ xC$\beta$y și C $\Rightarrow^+$ $z \alpha$\\
+ 
 \end{frame}
 
 
 
-\begin{frame}{Analiză sintactică bazată pe precedența simplă}
-\begin{wraptable}{r}{7cm}
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
+Fie gramatica:
+
+\textcolor{red}{1. S $\rightarrow$ aSAb}\\
+\textcolor{red}{2. S $\rightarrow$ d}\\
+\textcolor{red}{3. A $\rightarrow$ S}\\
+\textcolor{red}{4. A $\rightarrow$ c}
+\newline
+
+Calculul relațiilor de precedență simplă:
+
+$=_w$
+\newline
+
+a $=_w$ S
+
+S $=_w$ A
+
+A $=_w$ b
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
+Fie gramatica:
+
+\textcolor{red}{1. S $\rightarrow$ aSAb}\\
+\textcolor{red}{2. S $\rightarrow$ d}\\
+\textcolor{red}{3. A $\rightarrow$ S}\\
+\textcolor{red}{4. A $\rightarrow$ c}
+\newline
+
+Calculul relațiilor de precedență simplă:
+
+$<_w$
+\newline
+
+a$<_{w}$ $FIRST^+$(S)    \hspace{2cm} $FIRST^+$(S)=\{a, d\}\; \\
+
+S$<_{w}$ $FIRST^+$(A)    \hspace{2cm} $FIRST^+$(A)=\{a, c, d, S\}\; \\
+
+\$ $<_{w}$ $FIRST^+$(S)
+
+(\$ S \$)
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
+Fie gramatica:
+
+\textcolor{red}{1. S $\rightarrow$ aSAb}\\
+\textcolor{red}{2. S $\rightarrow$ d}\\
+\textcolor{red}{3. A $\rightarrow$ S}\\
+\textcolor{red}{4. A $\rightarrow$ c}
+\newline
+
+Calculul relațiilor de precedență simplă:
+
+$>_w$
+\newline
+
+$LAST^+$(S)$>_{w}$ $FIRST^+$(A) \hspace{2cm} \{b, d\} $>_{w}$ \{a, c, d, S\}\;\\
+
+$LAST^+$(A) $>_{w}$ \{b\}\;     \hspace{3.1cm} \{S, c, b, d\} $>_{w}$ \{b\}\; \\
+
+$LAST^+$(S) $>_{w}$ \$          \hspace{3.6cm} \{b, d \} $>_{w}$ \$ \\
+
+(\$ S \$)
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
 \centering
 \scalebox{0.7}{
 \begin{tabular}{| c | c | c | c | c | c | c | c |}
@@ -5011,52 +5055,65 @@ d 	& 	$>_{w}$	&  			&   	$>_{w}$	& 	$>_{w}$	&  	$>_{w}$	&        $>_{w}$	&  $>_{
 \hline
 \end{tabular}
 }
-\end{wraptable}
-\textcolor{ballblue}{\textbf{Exemplu:}}\\
-Fie \textcolor{ballblue}{gramatica:}\\
-\textcolor{red}{1. S $\rightarrow$ aSAb}\\
-\textcolor{red}{2. S $\rightarrow$ d}\\
-\textcolor{red}{3. S $\rightarrow$ S}\\
-\textcolor{red}{4. S $\rightarrow$ c}\\
-\textcolor{red}{\textbf{Matricea relațiilor de precedență:}}\\
-a$<_{w}$ $FIRST^+$(S);    $FIRST^+$(S)=\{a, d\}\; \\
-S$<_{w}$ $FIRST^*$(A);    $FIRST^+$(A)=\{a, c, d, S\}\; \\
-$LAST^=$(S)$>_{w}$ $FIRST^+$(A) $\rightleftharpoons$ \{b, d\} $>_{w}$ \{a, c, d, S\}\;\\
-
-$LAST^+$(A) $>_{w}$ \{b\}\; \hspace{2cm}   \{S, c, b, d\} $>_{w}$ \{b\}\; \\
-\vspace{6mm}
-\$ S \$ \\
-\$ $<_{w}$ $FIRST^*$(S) \hspace{2cm}   $\rightleftharpoons$ \$ $<_{w}$ \{a, d\}\; \\
-$LAST^+$(A) $>_{w}$ \$  \hspace{2cm}  $\rightleftharpoons$ \{b, d \} $>_{w}$ \$ \\
 \end{frame}
 
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
 
-\textcolor{ballblue}{\textbf{\underline{Algoritmul de bază}}}  de tip \textcolor{ballblue}{\textbf{DR (Deplasează - Reduce)}}\\
-Starea automatului este dată de: ($\alpha$ , x\$, y)\\
-\textcolor{red}{\textbf{L(ADR)={w|(\$, w\$, $A$)|--(\$S, \$, $\alpha$)}}} ; $\alpha$ - reprezintă analiza dreapta a propoziției;\\
-\underline{\textbf{Definim:}}\\
-\textcolor{orange}{f - funcția deplasează-reduce} 
-\textcolor{red}{f:($V_{N}$ $\cup$ $\Sigma$) x $\Sigma \rightarrow$ \{ \underline{depl}, \underline{red}, \underline{accept}, \underline{error}\}\;}\\
-\textcolor{orange}{g -funcția de reducere}
-\textcolor{red}{g : ( $V_{N}$ $\cup$ $\Sigma$)$^*$ $\rightarrow$ \{1, 2, 3, ...\}\;} unde:\\
-\begin{center}
-($V_{N} \cup \Sigma)^*$  -  vârful stivei\;\\
-\{1,2,3, ... \} - numărul producțiilor\;\\
-\end{center}
+\textbf{Algoritmul de analiză sintactică bazat pe relațiile de precendență simplă este de tip deplasare - reducere}
+\newline
 
-\textcolor{brown}{f($\alpha$,a) = \underline{depl} $\rightleftharpoons$ $\alpha$ $<_{w}$ a sau $\alpha$ $=_{w}$ a\; \\
-f($\alpha$,a) = \underline{red} $\rightleftharpoons$ $\alpha$ $>_{w}$ a\; \\
-f($\alpha$,a) = \underline{error} $\rightleftharpoons$ între $\alpha$ și a nu există relație de precedență\;\\
-f($\alpha$,a) = \underline{accept}}
+\begin{itemize}
+    \item \color{red}{\textbf{ 
+    ($q, \alpha a, bx, \beta )  \vdash^{d} (q, \alpha ab,x,\beta$)} 
+    
+    $\iff f(a,b) =$ depl}
+    
+    \item \color{red}{\textbf{
+    ($q, \alpha c \gamma a, bx, \beta ) \vdash^{r} (q, \alpha c A, bx, \beta i)$}
+     
+    $\iff f(a,b) =$ red, g(c$\gamma$a) = i, i: A $\to$ $\gamma$a $\in$ P}
+\end{itemize}
+
 \end{frame}
 
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
-{\color{brown} \rule{\linewidth}{0.1mm} }
+\textcolor{orange}{f - funcția de deplasare-reducere}\\
+ 
+\textcolor{red}{f:($V_{N}$ $\cup$ $\Sigma$) x $\Sigma \rightarrow$ \{\underline{depl}, \underline{red}, \underline{accept}, \underline{error}\}\;}\\
+
+\begin{itemize}
+\item
+f($\alpha$,a) = \underline{depl} $\iff$ $\alpha$ $<_{w}$ a sau $\alpha$ $=_{w}$ a\;
+
+\item
+f($\alpha$,a) = \underline{red} $\iff$ $\alpha$ $>_{w}$ a\;
+
+\item
+f($\alpha$,a) = \underline{error} $\iff$ între $\alpha$ și a nu există relație de precedență simplă\;
+
+\item
+f(\$S,\$) = \underline{accept}
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă}
+\textcolor{orange}{g - funcția de reducere}\\
+
+\textcolor{red}{g : ($V_{N}$ $\cup$ $\Sigma$)$^*$ $\rightarrow$ \{1, 2, 3, ...\}\;} unde:\\
+\begin{itemize}
+\item
+($V_{N} \cup \Sigma)^*$  -  vârful stivei\;
+
+\item
+\{1,2,3, ... \} - indicele regulilor de producție\;
+\end{itemize}
 
 \resizebox{\textwidth}{!}{\color{brown}{\textbf{
     g ($\beta x_{1}, x_{2}, \dots , x_{n}) = i 
@@ -5065,40 +5122,22 @@ f($\alpha$,a) = \underline{accept}}
         \land \beta <_{w} x_{1}$ 
 }}}
 
-
-\textbf{\underline{Automatul evolueaza astfel:}}
-\begin{itemize}
-    \item \color{red}{\textbf{ 
-    ( $\alpha a, bx, \beta )  \|--^{d} (\alpha ab,x,\beta$)
-    } 
-    $\iff f(a,b) =$ deplasare}
-    
-    \item \color{red}{\textbf{(
-    $\alpha c \gamma a, bx, \beta ) \|--^{r} (\alpha c \gamma a, bx, \beta i)$
-    } 
-    $\iff f(a,b) =$ reducere }
-\end{itemize}
-    
-\begin{textblock*}{3.8cm}(9cm,5.2cm)
-    \color{red}{
-   f(a,b)=reducere \\
-   g(c$\gamma$a) = i\\
-   \resizebox{\textwidth}{!}{i este productia A $\to$ $\gamma$a $\in$ P}\\}
-\end{textblock*}
-
-f(S,S) nu poate fi;\\
-f(S,a) = deplasare\\
-f(S,b) = reducere\\
-f(S,c) = deplasare\\
-f(S,d) = deplasare\\
-f(A,b) = deplasare\\
-f(a,a) = deplasare\\
-
 \end{frame}
 
-\begin{frame}{Analizoare bazate pe \underline{precedenta simpla}}
 
-\begin{textblock*}{3.8cm}(1cm,2cm) 
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
+
+Valorile funcția f rezultă imediat din matricea relațiilor de precendență simplă.
+
+e.g.\\
+f ( S, a ) = depl\\
+f ( S, b ) = red
+\newline
+
+Valorile funcției g rezultă imediat din regulile de producție.
+
+e.g.\\
 g ( SaSAb ) = 1\\
 g ( aaSAb ) = 1\\
 g ( \$aSAb ) = 1\\
@@ -5107,9 +5146,15 @@ g ( ad ) = 2\\
 g ( \$d ) = 2\\
 g ( SS ) = 3\\
 g ( Sc ) = 4\\
-\end{textblock*}
 
-\begin{textblock*}{3.8cm}(6cm,2cm) 
+\end{frame}
+
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
+
+\centering
 \begin{tabular}{| l | c | c | c | c | c | c | l|}
     \hline
        & S & A & a & b & c & d & \$ \\
@@ -5129,71 +5174,86 @@ g ( Sc ) = 4\\
      \$ &  &  & $<$ &  &  & $<$ &  \\
     \hline
 \end{tabular}
-\end{textblock*}
 
-\begin{textblock*}{14cm}(1cm,6cm)
-\color{red}{\textbf{Fie w = adadcbb}} \\
-\color{black}{
-(\$, adadcbb\$, $\gamma$) 
-$\|--^{d}$ (\$a,dadcbb\$,1)  
-$\|--^{d}$ ( \$ad, adcbb\$, 1) }\\
-$\|--^{r}$(\$aS,adcbb\$,2) 
-$\|--^{d}$(\$aSa,dcbb\$,2)
-$\|--^{d}$(\$aSad,cbb\$,2)\\
-$\|--^{r}$(\$aSaS,cbb\$,22)
-$\|--^{d}$(\$aSaSc,bb\$,22)
-$\|--^{r}$(\$aSaSA,bb\$,224)\\
-$\|--^{d}$(\$aSaSAb,b\$,224)
-$\|--^{r}$(\$aSS,b\$,2241)
-$\|--^{r}$(\$aSA,b\$,22413)\\
-$\|--^{d}$(\$aSAb,\$,22413)
-$\|--^{r}$(\$S,\$,224131)
-\end{textblock*}
+\end{frame}
+
+
+
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exemplu}
+
+($q_0$, \$, adadcbb\$, $\epsilon$) 
+
+$\vdash^{d}$ (q, \$a,dadcbb\$,1)  
+
+$\vdash^{d}$ (q, \$ad, adcbb\$, 1)
+
+$\vdash^{r}$ (q, \$aS,adcbb\$,2) 
+
+$\vdash^{d}$ (q, \$aSa,dcbb\$,2)
+
+$\vdash^{d}$ (q, \$aSad,cbb\$,2)
+
+$\vdash^{r}$ (q, \$aSaS,cbb\$,22)
+
+$\vdash^{d}$ (q, \$aSaSc,bb\$,22)
+
+$\vdash^{r}$ (q, \$aSaSA,bb\$,224)
+
+$\vdash^{d}$ (q, \$aSaSAb,b\$,224)
+
+$\vdash^{r}$ (q, \$aSS,b\$,2241)
+
+$\vdash^{r}$ (q, \$aSA,b\$,22413)
+
+$\vdash^{d}$ (q, \$aSAb,\$,22413)
+
+$\vdash^{r}$ (q, \$S,\$,224131)
+
 \end{frame}
 
 
 
 \begin{frame}{Analiză sintactică bazată pe precedența simplă}
-\tiny{
-\begin{textblock*}{14cm}(1cm,1.5cm)
-%\begin{cases}
-%procedura MZR este
-%\hspace{1cm}step $\gets$ false\\
-%\hspace{1cm}ISI;ISO;IST $\gets$ 1\\
-%\hspace{1cm}ST(IST) = \$ \\
-%\hspace{1cm} 
-%\begin{cases}
-%repeta\\
-%\hspace{0.1cm}
-%\begin{cases} daca f(ST(IST),ST(IST))=deplaseaza\\
-%\hspace{0.5cm} atunci \hspace{0.4cm} IST $\gets$ IST+1\\
-%\hspace{1.7cm} ST(IST) $\gets$ ST(ISI)\\
-%\hspace{1.7cm} ISI $\gets$ ISI+1\\
-%\hspace{0.1cm} ori daca f(ST(IST),ST(ISI))=reducere\\
-%\hspace{0.5cm} atunci *cauta in jos in stiva doua var x,y a.i x<y\\
-%\hspace{1.4cm} *reduce sirul y $\alpha$  si inlocuieste varful stivei conform\\
-%\hspace{1.4cm} g(xy $\alpha$)(i,A $\to y \alpha$)\\
-%\hspace{1.4cm} SO(ISO) $\gets$ g(xy $\alpha$)=i\\
-%\hspace{1.4cm} ISO $\gets$ ISO+1\\
-%\hspace{0.1cm} ori daca f(ST(IST),SI(ISI))=accept\\
-%\hspace{0.5cm} atunci *OK\\
-%\hspace{0.8cm} step $\gets$ true\\
-%\hspace{0.1cm} ori daca f(ST(IST),SI(ISI))=error\\
-%\hspace{0.5cm} atunci *N?\\
-%\hspace{0.5cm} step $\gets$ true\\
+Algoritmul de analiză este următorul:
+\newline
 
-%\end{cases}
-%\\prin caut step???
-%\end{cases}
-%\\sfarsit
-%\end{cases}
-\end{textblock*}
+\tiny
+{
+$\begin{cases}
+\hspace{1cm}step \gets false\\
+\hspace{1cm}ISI;ISO;IST \gets 1\\
+\hspace{1cm}ST(IST) = \$ \\
+\hspace{1cm} 
+\begin{cases}
+repeta\\
+\hspace{0.1cm}
+\begin{cases} daca \; f(ST(IST),ST(IST))=deplaseaza\\
+\hspace{0.5cm} atunci \hspace{0.4cm} IST \gets IST+1\\
+\hspace{1.7cm} ST(IST) \gets SI(ISI)\\
+\hspace{1.7cm} ISI \gets ISI+1\\
+\hspace{0.1cm} ori \; daca \; f(ST(IST),SI(ISI))=reducere\\
+\hspace{0.5cm} atunci \; *cauta \; in \; jos \; in \; stiva \; doua \; simboluri \; x,y \; a.i \; x <_w y\\
+\hspace{1.4cm} *redu \; sirul \; y \alpha \; si \; inlocuieste \; varful \; stivei \; conform\\
+\hspace{1.4cm} g(xy \alpha)\; (i: A \to y \alpha)\\
+\hspace{1.4cm} SO(ISO) \gets g(xy \alpha)=i\\
+\hspace{1.4cm} ISO \gets ISO+1\\
+\hspace{0.1cm} ori \; daca \; f(ST(IST),SI(ISI))=accept\\
+\hspace{0.5cm} atunci *OK\\
+\hspace{0.8cm} step \gets true\\
+\hspace{0.1cm} ori \; daca \; f(ST(IST),SI(ISI))=error\\
+\hspace{0.5cm} atunci *NOT \; OK\\
+\hspace{0.5cm} step \gets true\\
+\end{cases}
+\\până \; când \; step \; este \; true
+\end{cases}
+\end{cases}
+$
 }
 \end{frame}
 
 
 
-\begin{frame}{Analiză sintactică bazată pe precedența simplă}    
+\begin{frame}{Analiză sintactică bazată pe precedența simplă - Exercițiu}    
     \begin{textblock*}{14cm}(5cm,3.6cm)
     \textbf{1. E $\rightarrow$ E $+$ T}\\
     \textbf{2. E $\to$ T}\\
@@ -6097,6 +6157,43 @@ Gramatica nu este W-W; se va incerca analiza cu LL1 sau precedenta slaba (I-M)\\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{frame}{Întrebări recapitulative}
+\begin{itemize}
+\item
+Fie $AP1=(Q, \Sigma, \Gamma, f, q_0, z_0, F)$ un automat finit cu stivă care implementează analiza sintactică descendentă pentru gramatica $G=(\Sigma, V_N, S, P)$ și fie $AP2=(Q', \Sigma ', \Gamma ', f', q_0 ', z_0 ', F')$ un automat finit cu stivă care implementează analiza sintactică ascendentă pentru aceeași gramatică. Arătați care sunt diferențele dintre elementele care definesc AP1 și cele care îl definesc pe AP2 și explicați.
+\newline
+
+\item
+Explicați de ce este nedeterminist algoritmul general de analiză sintactică ascendentă.
+\newline
+
+\item
+Explicați rolul relației de precedență operator mai mare în analiza sintactică corespunzătoare.
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Întrebări recapitulative}
+\begin{itemize}
+\item
+Enumerați și explicați diferențele dintre automatul finit cu stivă definit pentru analiza sintactică descendentă și automatul finit cu stivă definit pentru analiza sintactică ascendentă.
+\newline
+
+\item
+Explicați care este diferența dintre configurația inițială a automatului finit cu stivă pentru analiza sintactică LL(1) și pentru analiza sintactică bazată pe precedența operator.
+\newline
+
+\item
+Explicați cum rezolvă analiza sintactică bazată pe relațiile de precedență operator nedeterminismul algoritmului generic de analiză sintactică ascendentă.
+\newline
+
+\end{itemize}
+\end{frame}
 
 
 
