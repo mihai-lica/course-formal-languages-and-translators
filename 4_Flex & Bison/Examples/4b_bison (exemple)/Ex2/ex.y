@@ -19,8 +19,7 @@ S :
     |
     E ';' S
     | 
-    error ';' S
-       { EsteCorecta = 0; }
+    error ';' S { EsteCorecta = 0; }
     ;
 E : E TOK_PLUS E
     |

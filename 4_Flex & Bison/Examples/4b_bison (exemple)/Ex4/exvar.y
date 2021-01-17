@@ -122,8 +122,7 @@ S :
     |
     I ';' S
     | 
-    error ';' S
-       { EsteCorecta = 0; }
+    error ';' S { EsteCorecta = 0; }
     ;
 I : TOK_VARIABLE '=' E
       {

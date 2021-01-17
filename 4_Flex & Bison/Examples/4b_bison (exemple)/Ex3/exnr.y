@@ -20,8 +20,7 @@ S :
     |
     E ';' S { printf("= %d\n", $1); }
     | 
-    error ';' S
-       { EsteCorecta = 0; }
+    error ';' S { EsteCorecta = 0; }
     ;
 E : E TOK_PLUS E { $$ = $1 + $3; }
     |
